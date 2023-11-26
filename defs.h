@@ -45,3 +45,45 @@ void l_ghostExit(enum LoggerDetails reason);
 //Functions that we have defined
 
 //Structs that we have also defined to use for the program
+typedef struct {
+    GhostClass ghostType;
+    int boredom;
+    Room *room;
+} Ghost;
+
+
+typedef struct {
+    char name[MAX_STR];
+    Ghost *ghost;
+    EvidenceList ev;
+    RoomList roomlist;
+    Hunter huntersInRoom[NUM_HUNTERS];
+} Room;
+
+typedef struct {
+    Room *data;
+    struct RoomNode *next;
+} RoomNode;
+
+typedef struct EvidenceList {
+    EvidenceNode *head;
+    EvidenceNode *tail;
+} EvidenceList;
+
+typedef struct {
+    EvidenceType evType;
+    struct EvidenceNode *next;
+} EvidenceNode;
+
+typedef struct EvidenceCollection {
+    EvidenceType evType;
+    EvidenceNode *next;
+} EvidenceCollection;
+
+typedef struct {
+    char name[MAX_STR];
+    Room *roomIn;
+    EvidenceType canRead;
+    EvidenceCollection *collect;
+    int fear;
+} Hunter;
