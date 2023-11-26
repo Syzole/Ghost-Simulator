@@ -90,6 +90,10 @@ void initRoomList(RoomList* roomList){
     roomList->tail = NULL;
 }
 
+void connectRooms(Room* room1, Room* room2){
+    //
+}
+
 void initEvidenceList(EvidenceList* evidenceList){
     evidenceList->head = NULL;
     evidenceList->tail = NULL;

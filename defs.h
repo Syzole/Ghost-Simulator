@@ -47,11 +47,12 @@ void l_ghostExit(enum LoggerDetails reason);
 //Functions that we have defined
 
 //house.c
-void populateRooms(HouseType* house)
 Room* createRoom(char* name);
+void populateRooms(HouseType* house);
 void initHouse(House** house);
 void initGhost(Ghost* ghost);
 void initRoomList(RoomList* roomList);
+void connectRooms(Room* room1, Room* room2);
 void initEvidenceList(EvidenceList* evidenceList);
 void initHunter(Hunter* hunter, House* house, int numHunt);
 
