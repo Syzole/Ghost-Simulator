@@ -62,7 +62,7 @@ Room* createRoom(char* name) {
     strcpy(room->name, name);
     //set pointer of ghost to null and init both lists
     room->ghost = NULL;    
-    initEvidinceList(&(room->ev));
+    initEvidenceList(&(room->ev));
     initRoomList(&(room->roomList));
     return room;
 }
@@ -71,7 +71,7 @@ void initHouse(House** house) {
     *house = (House*)malloc(sizeof(House));
 
     initRoomList(&((*house)->totalRoomList));
-    initEvidinceList(&((*house)->foundEvidence));
+    initEvidenceList(&((*house)->foundEvidence));
     
     for (int i = 0; i < NUM_HUNTERS; ++i) {
         initHunter(&((*house)->huntersInRoom[i]), *house, i);
@@ -90,7 +90,7 @@ void initRoomList(RoomList* roomList){
     roomList->tail = NULL;
 }
 
-void initEvidinceList(EvidenceList* evidenceList){
+void initEvidenceList(EvidenceList* evidenceList){
     evidenceList->head = NULL;
     evidenceList->tail = NULL;
 }
