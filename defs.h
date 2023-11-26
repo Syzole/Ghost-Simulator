@@ -41,3 +41,7 @@ void l_ghostInit(enum GhostClass type, char* room);
 void l_ghostMove(char* room);
 void l_ghostEvidence(enum EvidenceType evidence, char* room);
 void l_ghostExit(enum LoggerDetails reason);
+
+//Functions that we have defined
+
+//Structs that we have also defined to use for the program
