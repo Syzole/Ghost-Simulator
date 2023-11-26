@@ -6,6 +6,8 @@
 #include <semaphore.h>
 #include <time.h>
 
+// Can change numbers as long as the core rules of the simulation hold up.
+
 #define MAX_STR         64
 #define MAX_RUNS        50
 #define BOREDOM_MAX     100
@@ -44,13 +46,9 @@ void l_ghostExit(enum LoggerDetails reason);
 
 //Functions that we have defined
 
-//Structs that we have also defined to use for the program
-typedef struct {
-    GhostClass ghostType;
-    int boredom;
-    Room *room;
-} Ghost;
+// createRoom, connectRooms, addRoom, etc.
 
+//Structs that we have also defined to use for the program
 
 typedef struct {
     char name[MAX_STR];
@@ -66,6 +64,26 @@ typedef struct {
     struct RoomNode *next;
 } RoomNode;
 
+typedef struct {
+    Hunter huntersInRoom[NUM_HUNTERS];
+    RoomList totalRoomList;
+    EvidenceList foundEvidence;
+} House;
+
+typedef struct {
+    GhostClass ghostType;
+    int boredom;
+    Room *room;
+} Ghost;
+
+typedef struct {
+    char name[MAX_STR];
+    Room *roomIn;
+    EvidenceType canRead;
+    EvidenceCollection *collect;
+    int fear;
+} Hunter;
+
 typedef struct EvidenceList {
     EvidenceNode *head;
     EvidenceNode *tail;
@@ -80,17 +98,3 @@ typedef struct EvidenceCollection {
     EvidenceType evType;
     EvidenceNode *next;
 } EvidenceCollection;
-
-typedef struct {
-    char name[MAX_STR];
-    Room *roomIn;
-    EvidenceType canRead;
-    EvidenceCollection *collect;
-    int fear;
-} Hunter;
-
-typedef struct {
-    Hunter huntersInRoom[NUM_HUNTERS];
-    RoomList totalRoomList;
-    EvidenceList foundEvidence;
-} House;
