@@ -56,9 +56,14 @@ void populateRooms(HouseType* house) {
 }
 
 Room* createRoom(char* name) {
+    //Allocate space
     Room* room = (Room*)malloc(sizeof(Room));
+    //copy name
     strcpy(room->name, name);
+    //set pointer of ghost to null
     room->ghost = NULL;    
+    initEvidinceList(&(room->ev));
+    initRoomList(&(room->roomList));
     return room;
 }
 
@@ -75,4 +80,9 @@ void initGhost(Ghost* ghost) {
 void initRoomList(RoomList* roomList){
     roomList->head = NULL;
     roomList->tail = NULL;
+}
+
+void initEvidinceList(EvidenceList* evidenceList){
+    evidenceList->head = NULL;
+    evidenceList->tail = NULL;
 }
