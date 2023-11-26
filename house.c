@@ -56,11 +56,16 @@ void populateRooms(HouseType* house) {
 }
 
 void initHouse(){
-
+    initRoomList(&(house->totalRoomList));
 }
 
 void initGhost(Ghost* ghost) {
     ghost->ghostType = randomGhost();
     ghost->boredom = 0;
     ghost->room = NULL;
+}
+
+void initRoomList(RoomList* roomList){
+    roomList->head = NULL;
+    roomList->tail = NULL;
 }
