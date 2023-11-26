@@ -56,19 +56,10 @@ void populateRooms(HouseType* house) {
 }
 
 Room* createRoom(char* name) {
-    // Allocate memory for the room
     Room* room = (Room*)malloc(sizeof(Room));
-
-    // Check for allocation failure
-    if (room == NULL) {
-        // Handle allocation failure, maybe print an error message or return NULL
-        return NULL;
-    }
-
-    // Initialize room members
-    // For example:
     strcpy(room->name, name);
     room->ghost = NULL;    
+    return room;
 }
 
 void initHouse(){
