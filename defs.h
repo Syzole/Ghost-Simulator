@@ -58,6 +58,7 @@ typedef struct {
     EvidenceList ev;
     RoomList roomlist;
     Hunter huntersInRoom[NUM_HUNTERS];
+    sem_t semaphore;
 } Room;
 
 typedef struct {
@@ -87,3 +88,9 @@ typedef struct {
     EvidenceCollection *collect;
     int fear;
 } Hunter;
+
+typedef struct {
+    Hunter huntersInRoom[NUM_HUNTERS];
+    RoomList totalRoomList;
+    EvidenceCollection *foundEvidence;
+} House;
