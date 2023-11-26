@@ -80,7 +80,7 @@ typedef struct {
     char name[MAX_STR];
     Room *roomIn;
     EvidenceType canRead;
-    EvidenceCollection *collect;
+    EvidenceList *collect;
     int fear;
 } Hunter;
 
@@ -93,8 +93,3 @@ typedef struct {
     EvidenceType evType;
     struct EvidenceNode *next;
 } EvidenceNode;
-
-typedef struct EvidenceCollection {
-    EvidenceType evType;
-    EvidenceNode *next;
-} EvidenceCollection;

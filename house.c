@@ -60,16 +60,24 @@ Room* createRoom(char* name) {
     Room* room = (Room*)malloc(sizeof(Room));
     //copy name
     strcpy(room->name, name);
-    //set pointer of ghost to null
+    //set pointer of ghost to null and init both lists
     room->ghost = NULL;    
     initEvidinceList(&(room->ev));
     initRoomList(&(room->roomList));
     return room;
 }
 
-void initHouse(){
-    initRoomList(&(house->totalRoomList));
+void initHouse(House** house) {
+    *house = (House*)malloc(sizeof(House));
+
+    initRoomList(&((*house)->totalRoomList));
+    initEvidinceList(&((*house)->foundEvidence));
+    
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        initHunter(&((*house)->huntersInRoom[i]), *house, i);
+    }
 }
+
 
 void initGhost(Ghost* ghost) {
     ghost->ghostType = randomGhost();
@@ -85,4 +93,13 @@ void initRoomList(RoomList* roomList){
 void initEvidinceList(EvidenceList* evidenceList){
     evidenceList->head = NULL;
     evidenceList->tail = NULL;
+}
+
+void initHunter(Hunter* hunter, House* house, int numHunt) {
+    printf("This is hunter #%d, what should his name be",numHunt+1);
+    scanf("%s", hunter->name);
+    hunter->roomIn = house->totalRoomList.head->data;
+    hunter->canRead = (EvidenceType)(numHunt);
+    hunter->collect = &(house->foundEvidence);
+    hunter->fear = 0;
 }
