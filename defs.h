@@ -92,5 +92,5 @@ typedef struct {
 typedef struct {
     Hunter huntersInRoom[NUM_HUNTERS];
     RoomList totalRoomList;
-    EvidenceCollection *foundEvidence;
+    EvidenceList foundEvidence;
 } House;

@@ -54,3 +54,13 @@ void populateRooms(HouseType* house) {
     addRoom(&house->rooms, garage);
     addRoom(&house->rooms, utility_room);
 }
+
+void initHouse(){
+
+}
+
+void initGhost(Ghost* ghost) {
+    ghost->ghostType = randomGhost();
+    ghost->boredom = 0;
+    ghost->room = NULL;
+}
