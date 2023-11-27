@@ -7,11 +7,11 @@ int main()
 
     // Create the house: You may change this, but it's here for demonstration purposes
     // Note: This code will not compile until you have implemented the house functions and structures
-    HouseType house;
+    House house;
     Ghost ghost;
 
     initGhost(&ghost);
-    
+
     initHouse(&house);
     populateRooms(&house);
 
@@ -23,11 +23,11 @@ int main()
 void startHunt(House *house,Ghost* ghost){
     //first add hunters to the head
     for (int i = 0; i < NUM_HUNTERS; ++i) {
-        addHunterToRoom(house->totalRoomList.head->data, house->huntersInHouse[i]);
+        addHunterToRoom(house->rooms.head->data, house->huntersInHouse[i]);
     }
 
-    int randRoom = randInt(1,house->totalRoomList.count);
-    RoomNode* currRoomNode = house->totalRoomList.head;
+    int randRoom = randInt(1,house->rooms.count);
+    RoomNode* currRoomNode = house->rooms.head;
 
     for (int i = 0; i < randRoom; ++i) {
         currRoomNode = currRoomNode->next;

@@ -1,3 +1,4 @@
+// Include necessary headers
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,8 +7,7 @@
 #include <semaphore.h>
 #include <time.h>
 
-// Can change numbers as long as the core rules of the simulation hold up.
-
+// Constants
 #define MAX_STR         64
 #define MAX_RUNS        50
 #define BOREDOM_MAX     100
@@ -19,76 +19,87 @@
 #define FEAR_MAX        10
 #define LOGGING         C_TRUE
 
+// Enums
 typedef enum EvidenceType EvidenceType;
 typedef enum GhostClass GhostClass;
+typedef enum LoggerDetails LoggerDetails;
 
 enum EvidenceType { EMF, TEMPERATURE, FINGERPRINTS, SOUND, EV_COUNT, EV_UNKNOWN };
 enum GhostClass { POLTERGEIST, BANSHEE, BULLIES, PHANTOM, GHOST_COUNT, GH_UNKNOWN };
 enum LoggerDetails { LOG_FEAR, LOG_BORED, LOG_EVIDENCE, LOG_SUFFICIENT, LOG_INSUFFICIENT, LOG_UNKNOWN };
 
-//Structs that we have also defined to use for the program
 
-typedef struct RoomNode {
-    Room *data;
-    struct RoomNode *next;
-} RoomNode;
+// Forward declarations
+typedef struct Room Room;
+typedef struct Ghost Ghost;
+typedef struct EvidenceList EvidenceList;
+typedef struct RoomNode RoomNode;
+typedef struct RoomList RoomList;
+typedef struct Hunter Hunter;
+typedef struct EvidenceNode EvidenceNode;
+typedef struct House House;
 
-// Define RoomList next, as it's used in Room
-typedef struct RoomList {
+// Data structures
+struct EvidenceNode {
+    EvidenceType evType;
+    struct EvidenceNode* next;
+};
+
+struct EvidenceList {
+    EvidenceNode* head;
+    EvidenceNode* tail;
+};
+
+struct RoomNode {
+    Room* data;
+    struct RoomNode* next;
+};
+
+struct RoomList {
     RoomNode* head;
     RoomNode* tail;
-    int count; //this will be used in the random parts
-} RoomList;
+    int count;
+};
 
-// Now define Room, as it's used in House
-typedef struct Room {
+struct Room {
     char name[MAX_STR];
-    Ghost *ghost;
+    Ghost* ghost;
     EvidenceList ev;
     RoomList roomlist;
-    Hunter *huntersInRoom[NUM_HUNTERS];
+    Hunter* huntersInRoom[NUM_HUNTERS];
     sem_t semaphore;
-} Room;
+};
 
-typedef struct {
-    Hunter *huntersInHouse[NUM_HUNTERS];
-    RoomList totalRoomList;
-    EvidenceList foundEvidence;
-} House;
-
-typedef struct {
-    GhostClass ghostType;
-    int boredom;
-    Room *room;
-} Ghost;
-
-typedef struct {
+struct Hunter {
     int id;
     char name[MAX_STR];
-    Room *roomIn;
+    Room* roomIn;
     EvidenceType canRead;
-    EvidenceList *collect;
+    EvidenceList* collect;
     int fear;
-} Hunter;
+};
 
-typedef struct EvidenceList {
-    EvidenceNode *head;
-    EvidenceNode *tail;
-} EvidenceList;
+struct Ghost {
+    GhostClass ghostType;
+    int boredom;
+    Room* room;
+};
 
-typedef struct {
-    EvidenceType evType;
-    struct EvidenceNode *next;
-} EvidenceNode;
 
-// Helper Utilies
-int randInt(int,int);        // Pseudo-random number generator function
-float randFloat(float, float);  // Pseudo-random float generator function
-enum GhostClass randomGhost();  // Return a randomly selected a ghost type
-void ghostToString(enum GhostClass, char*); // Convert a ghost type to a string, stored in output paremeter
-void evidenceToString(enum EvidenceType, char*); // Convert an evidence type to a string, stored in output parameter
+struct House {
+    Hunter* huntersInHouse[NUM_HUNTERS];
+    RoomList rooms;
+    EvidenceList foundEvidence;
+};
 
-// Logging Utilities
+// Helper function declarations
+int randInt(int, int);
+float randFloat(float, float);
+enum GhostClass randomGhost();
+void ghostToString(enum GhostClass, char*);
+void evidenceToString(enum EvidenceType, char*);
+
+// Logging function declarations
 void l_hunterInit(char* name, enum EvidenceType equipment);
 void l_hunterMove(char* name, char* room);
 void l_hunterReview(char* name, enum LoggerDetails reviewResult);
@@ -99,16 +110,15 @@ void l_ghostMove(char* room);
 void l_ghostEvidence(enum EvidenceType evidence, char* room);
 void l_ghostExit(enum LoggerDetails reason);
 
-//Functions that we have defined
-
-//house.c
+// Forward declarations for functions in house.c
 void initGhost(Ghost* ghost);
 void initHunter(Hunter* hunter, House* house, int numHunt);
 void initEvidenceList(EvidenceList* evidenceList);
 void initRoomList(RoomList* roomList);
-void initHouse(House** house);
+void initHouse(House* house);
 Room* createRoom(char* name);
 void connectRooms(Room* room1, Room* room2);
 void addRoom(RoomList* roomList, Room* room);
-void populateRooms(HouseType* house);
-
+void populateRooms(House* house);
+void startHunt(House *house,Ghost* ghost);
+void addHunterToRoom(Room* room, Hunter* hunter);

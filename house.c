@@ -6,17 +6,15 @@ void initRoomList(RoomList* roomList){
     roomList->count = 0;
 }
 
-void initHouse(House** house) {
-    *house = (House*)malloc(sizeof(House));
-
-    initRoomList(&((*house)->totalRoomList));
-    initEvidenceList(&((*house)->foundEvidence));
+void initHouse(House* house) {
+    initRoomList(&((house)->rooms));
+    initEvidenceList(&((house)->foundEvidence));
     
     //init hunters and add to house array
     for (int i = 0; i < NUM_HUNTERS; ++i) {
         Hunter* newHunter = (Hunter*)malloc(sizeof(Hunter));
-        initHunter(newHunter, *house, i);
-        (*house)->huntersInHouse[i] = newHunter;
+        initHunter(newHunter, house, i);
+        house->huntersInHouse[i] = newHunter;
     }
 }
 
@@ -29,7 +27,7 @@ Room* createRoom(char* name) {
 
     room->ghost = NULL;    
     initEvidenceList(&(room->ev));
-    initRoomList(&(room->roomList));
+    initRoomList(&(room->roomlist));
     return room;
 }
 
@@ -87,7 +85,7 @@ void addRoom(RoomList* roomList, Room* room) {
     Note: You may modify this as long as room names and connections are maintained.
         out: house - the house to populate with rooms. Assumes house has been initialized.
 */
-void populateRooms(HouseType* house) {
+void populateRooms(House* house) {
     // First, create each room
 
     // createRoom assumes that we dynamically allocate a room, initializes the values, and returns a RoomType*
