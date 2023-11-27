@@ -41,7 +41,7 @@ typedef struct RoomList {
 } RoomList;
 
 // Now define Room, as it's used in House
-typedef struct {
+typedef struct Room {
     char name[MAX_STR];
     Ghost *ghost;
     EvidenceList ev;
