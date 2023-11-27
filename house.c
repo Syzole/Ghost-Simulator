@@ -34,6 +34,8 @@ void initHouse(House** house) {
 
     initRoomList(&((*house)->totalRoomList));
     initEvidenceList(&((*house)->foundEvidence));
+
+    initGhost(&(house->ghost));
     
     //init hunters and add to house array
     for (int i = 0; i < NUM_HUNTERS; ++i) {
