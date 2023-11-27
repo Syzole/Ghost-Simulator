@@ -59,6 +59,19 @@ void populateRooms(HouseType* house);
 
 //Structs that we have also defined to use for the program
 
+typedef struct RoomNode {
+    Room *data;
+    struct RoomNode *next;
+} RoomNode;
+
+// Define RoomList next, as it's used in Room
+typedef struct RoomList {
+    RoomNode* head;
+    RoomNode* tail;
+    int count; //this will be used in the random parts
+} RoomList;
+
+// Now define Room, as it's used in House
 typedef struct {
     char name[MAX_STR];
     Ghost *ghost;
@@ -67,17 +80,6 @@ typedef struct {
     Hunter *huntersInRoom[NUM_HUNTERS];
     sem_t semaphore;
 } Room;
-
-typedef struct RoomList {
-    RoomNode* head;
-    RoomNode* tail;
-    int count; //this will be used in the random parts
-} RoomList;
-
-typedef struct {
-    Room *data;
-    struct RoomNode *next;
-} RoomNode;
 
 typedef struct {
     Hunter *huntersInHouse[NUM_HUNTERS];
