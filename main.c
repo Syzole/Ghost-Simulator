@@ -11,8 +11,10 @@ int main()
     Ghost ghost;
 
     initGhost(&ghost);
+    
     initHouse(&house);
     populateRooms(&house);
+
     startHunt(&house, &ghost);
 
     return 0;
