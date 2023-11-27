@@ -10,7 +10,24 @@ int main()
     HouseType house;
     initHouse(&house);
     populateRooms(&house);
+    //initGhost
 
     return 0;
 }
 
+void startHunt(House *house,Ghost* ghost){
+    //first add hunters to the head
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        addHunterToRoom(house->totalRoomList.head->data, house->huntersInHouse[i]);
+    }
+
+    int randRoom = randInt(1,house->totalRoomList.count);
+    RoomNode* currRoomNode = house->totalRoomList.head;
+
+    for (int i = 0; i < randRoom; ++i) {
+        currRoomNode = currRoomNode->next;
+    }
+
+    ghost->room = currRoomNode->data;
+    l_ghostInit(ghost->ghostType, ghost->room->name);
+}

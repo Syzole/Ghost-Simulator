@@ -1,28 +1,5 @@
 #include "defs.h"
 
-void initGhost(Ghost* ghost) {
-    ghost->ghostType = randomGhost();
-    ghost->boredom = 0;
-    ghost->room = NULL;
-    //l_ghostInit(ghost->ghostType, ghost->room->name);
-}
-void initHunter(Hunter* hunter, House* house, int numHunt) {
-    hunter->id = numHunt;
-    //Hunter Id is the number of the hunter -1
-    printf("This is Hunter #%d. What should their name be?",numHunt+1);
-    scanf("%63s", hunter->name);
-    hunter->roomIn = house->totalRoomList.head->data;
-    hunter->canRead = (EvidenceType)(numHunt);
-    hunter->collect = &(house->foundEvidence);
-    hunter->fear = 0;
-    l_hunterInit(hunter->name,hunter->canRead);
-}
-
-void initEvidenceList(EvidenceList* evidenceList){
-    evidenceList->head = NULL;
-    evidenceList->tail = NULL;
-}
-
 void initRoomList(RoomList* roomList){
     roomList->head = NULL;
     roomList->tail = NULL;
@@ -34,8 +11,6 @@ void initHouse(House** house) {
 
     initRoomList(&((*house)->totalRoomList));
     initEvidenceList(&((*house)->foundEvidence));
-
-    initGhost(&(house->ghost));
     
     //init hunters and add to house array
     for (int i = 0; i < NUM_HUNTERS; ++i) {
@@ -105,28 +80,6 @@ void addRoom(RoomList* roomList, Room* room) {
         roomList->tail = newNode;
     }
     roomList->count++;
-}
-
-void addHunterToRoom(Room* room, Hunter* hunter) {
-    room->huntersInRoom[hunter->id] = hunter;
-    l_hunterMove(hunter->name, room->name);
-}
-
-void startHunt(House *house,Ghost* ghost){
-    //first add hunters to the head
-    for (int i = 0; i < NUM_HUNTERS; ++i) {
-        addHunterToRoom(house->totalRoomList.head->data, house->huntersInHouse[i]);
-    }
-
-    int randRoom = randInt(1,house->totalRoomList.count);
-    RoomNode* currRoomNode = house->totalRoomList.head;
-
-    for (int i = 0; i < randRoom; ++i) {
-        currRoomNode = currRoomNode->next;
-    }
-
-    ghost->room = currRoomNode->data;
-    l_ghostInit(ghost->ghostType, ghost->room->name);
 }
 
 /*

@@ -83,7 +83,6 @@ typedef struct {
     Hunter *huntersInHouse[NUM_HUNTERS];
     RoomList totalRoomList;
     EvidenceList foundEvidence;
-    Ghost ghost;
 } House;
 
 typedef struct {
