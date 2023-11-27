@@ -99,6 +99,10 @@ void addRoom(RoomList* roomList, Room* room) {
     }
 }
 
+void addHunterToRoom(Room* room, Hunter* hunter) {
+    room->huntersInRoom[hunter->id] = hunter;
+}
+
 /*
     Dynamically allocates several rooms and populates the provided house.
     Note: You may modify this as long as room names and connections are maintained.
