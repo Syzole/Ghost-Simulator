@@ -5,7 +5,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     //Hunter Id is the number of the hunter -1
     printf("This is Hunter #%d. What should their name be?",numHunt+1);
     scanf("%63s", hunter->name);
-    hunter->roomIn = house->rooms.head->data;
+    hunter->roomIn = NULL;
     hunter->canRead = (EvidenceType)(numHunt);
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
