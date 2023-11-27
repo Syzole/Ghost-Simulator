@@ -65,7 +65,7 @@ typedef struct {
     Ghost *ghost;
     EvidenceList ev;
     RoomList roomlist;
-    Hunter huntersInRoom[NUM_HUNTERS];
+    Hunter *huntersInRoom[NUM_HUNTERS];
     sem_t semaphore;
 } Room;
 
@@ -75,7 +75,7 @@ typedef struct {
 } RoomNode;
 
 typedef struct {
-    Hunter huntersInRoom[NUM_HUNTERS];
+    Hunter *huntersInRoom[NUM_HUNTERS];
     RoomList totalRoomList;
     EvidenceList foundEvidence;
 } House;
