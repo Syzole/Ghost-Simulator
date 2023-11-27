@@ -110,15 +110,21 @@ void l_ghostMove(char* room);
 void l_ghostEvidence(enum EvidenceType evidence, char* room);
 void l_ghostExit(enum LoggerDetails reason);
 
-// Forward declarations for functions in house.c
+// Forward declarations for functions in Ghost.c
 void initGhost(Ghost* ghost);
+
+// Forward declarations for functions in Hunter.c
 void initHunter(Hunter* hunter, House* house, int numHunt);
 void initEvidenceList(EvidenceList* evidenceList);
+void addHunterToRoom(Room* room, Hunter* hunter);
+
+// Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);
 void initHouse(House* house);
 Room* createRoom(char* name);
 void connectRooms(Room* room1, Room* room2);
 void addRoom(RoomList* roomList, Room* room);
 void populateRooms(House* house);
+
+// Forward declarations for functions in main.c
 void startHunt(House *house,Ghost* ghost);
-void addHunterToRoom(Room* room, Hunter* hunter);
