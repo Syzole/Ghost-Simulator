@@ -104,6 +104,7 @@ void addRoom(RoomList* roomList, Room* room) {
 
 void addHunterToRoom(Room* room, Hunter* hunter) {
     room->huntersInRoom[hunter->id] = hunter;
+    l_hunterMove(hunter->name, room->name);
 }
 
 void startHunt(House *house){
