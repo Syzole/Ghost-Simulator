@@ -61,7 +61,7 @@ Room* createRoom(char* name) {
     //copy name
     strcpy(room->name, name);
     //set pointer of ghost to null and init both lists
-    
+
     room->ghost = NULL;    
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomList));
@@ -96,6 +96,13 @@ void connectRooms(Room* room1, Room* room2){
     RoomNode* node1 = (RoomNode*)malloc(sizeof(RoomNode));
     RoomNode* node2 = (RoomNode*)malloc(sizeof(RoomNode));
 
+    node1->data = room1;
+    node1->next = NULL;
+
+    node2->data = room2;
+    node2->next = NULL;
+
+
     //add based to end if list, checking if empty to adjust head or just the tail
     if(room1->roomlist.head==NULL){
         room1->roomlist.head=node2;
@@ -116,6 +123,22 @@ void connectRooms(Room* room1, Room* room2){
     }
 
 }
+
+void addRoom(RoomList* roomList, Room* room) {
+    RoomNode* newNode = (RoomNode*)malloc(sizeof(RoomNode));
+    newNode->data = room;
+    newNode->next = NULL;
+
+    if (roomList->head == NULL) {
+        roomList->head = newNode;
+        roomList->tail = newNode;
+    } 
+    else {
+        roomList->tail->next = newNode;
+        roomList->tail = newNode;
+    }
+}
+
 
 void initEvidenceList(EvidenceList* evidenceList){
     evidenceList->head = NULL;
