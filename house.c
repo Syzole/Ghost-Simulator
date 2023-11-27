@@ -9,7 +9,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->id = numHunt;
     //Hunter Id is the number of the hunter -1
     printf("This is hunter #%d, what should his name be",numHunt+1);
-    scanf("%s", hunter->name);
+    scanf("%63s", hunter->name);
     hunter->roomIn = house->totalRoomList.head->data;
     hunter->canRead = (EvidenceType)(numHunt);
     hunter->collect = &(house->foundEvidence);
@@ -33,9 +33,11 @@ void initHouse(House** house) {
     initRoomList(&((*house)->totalRoomList));
     initEvidenceList(&((*house)->foundEvidence));
     
+    //init hunters and add to house array
     for (int i = 0; i < NUM_HUNTERS; ++i) {
         Hunter* newHunter = (Hunter*)malloc(sizeof(Hunter));
         initHunter(newHunter, *house, i);
+        (*house)->huntersInHouse[i] = newHunter;
     }
 }
 
@@ -102,6 +104,13 @@ void addRoom(RoomList* roomList, Room* room) {
 
 void addHunterToRoom(Room* room, Hunter* hunter) {
     room->huntersInRoom[hunter->id] = hunter;
+}
+
+void startHunt(House *house){
+    //first add hunters to the head
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        addHunterToRoom(house->totalRoomList.head->data, house->huntersInHouse[i]);
+    }
 }
 
 /*

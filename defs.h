@@ -74,7 +74,7 @@ typedef struct {
 } RoomNode;
 
 typedef struct {
-    Hunter *huntersInRoom[NUM_HUNTERS];
+    Hunter *huntersInHouse[NUM_HUNTERS];
     RoomList totalRoomList;
     EvidenceList foundEvidence;
 } House;
