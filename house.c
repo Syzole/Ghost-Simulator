@@ -9,7 +9,7 @@ void initGhost(Ghost* ghost) {
 void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->id = numHunt;
     //Hunter Id is the number of the hunter -1
-    printf("This is hunter #%d, what should his name be",numHunt+1);
+    printf("This is Hunter #%d. What should their name be?",numHunt+1);
     scanf("%63s", hunter->name);
     hunter->roomIn = house->totalRoomList.head->data;
     hunter->canRead = (EvidenceType)(numHunt);
@@ -119,7 +119,7 @@ void startHunt(House *house,Ghost* ghost){
     int randRoom = randInt(1,house->totalRoomList.count);
     RoomNode* currRoomNode = house->totalRoomList.head;
 
-    for (int i = 0; i <r oomIndex; ++i) {
+    for (int i = 0; i < randRoom; ++i) {
         currRoomNode = currRoomNode->next;
     }
 
