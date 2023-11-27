@@ -86,6 +86,7 @@ typedef struct {
 } Ghost;
 
 typedef struct {
+    int id;
     char name[MAX_STR];
     Room *roomIn;
     EvidenceType canRead;

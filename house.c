@@ -6,6 +6,8 @@ void initGhost(Ghost* ghost) {
     ghost->room = NULL;
 }
 void initHunter(Hunter* hunter, House* house, int numHunt) {
+    hunter->id = numHunt;
+    //Hunter Id is the number of the hunter -1
     printf("This is hunter #%d, what should his name be",numHunt+1);
     scanf("%s", hunter->name);
     hunter->roomIn = house->totalRoomList.head->data;
@@ -31,7 +33,8 @@ void initHouse(House** house) {
     initEvidenceList(&((*house)->foundEvidence));
     
     for (int i = 0; i < NUM_HUNTERS; ++i) {
-        initHunter(&((*house)->huntersInRoom[i]), *house, i);
+        Hunter* newHunter = (Hunter*)malloc(sizeof(Hunter));
+        initHunter(newHunter, *house, i);
     }
 }
 
