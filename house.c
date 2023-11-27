@@ -91,7 +91,8 @@ void initRoomList(RoomList* roomList){
 }
 
 void connectRooms(Room* room1, Room* room2){
-    //
+    room1->roomList.tail = room2;
+    room2->roomList.tail = room1;
 }
 
 void initEvidenceList(EvidenceList* evidenceList){
