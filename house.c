@@ -14,6 +14,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->canRead = (EvidenceType)(numHunt);
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
+    l_hunterInit(hunter->name,hunter->canRead);
 }
 
 void initEvidenceList(EvidenceList* evidenceList){
