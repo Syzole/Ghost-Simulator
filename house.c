@@ -4,6 +4,7 @@ void initGhost(Ghost* ghost) {
     ghost->ghostType = randomGhost();
     ghost->boredom = 0;
     ghost->room = NULL;
+    //l_ghostInit(ghost->ghostType, ghost->room->name);
 }
 void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->id = numHunt;
@@ -25,6 +26,7 @@ void initEvidenceList(EvidenceList* evidenceList){
 void initRoomList(RoomList* roomList){
     roomList->head = NULL;
     roomList->tail = NULL;
+    roomList->count = 0;
 }
 
 void initHouse(House** house) {
@@ -100,6 +102,7 @@ void addRoom(RoomList* roomList, Room* room) {
         roomList->tail->next = newNode;
         roomList->tail = newNode;
     }
+    roomList->count++;
 }
 
 void addHunterToRoom(Room* room, Hunter* hunter) {
@@ -107,11 +110,21 @@ void addHunterToRoom(Room* room, Hunter* hunter) {
     l_hunterMove(hunter->name, room->name);
 }
 
-void startHunt(House *house){
+void startHunt(House *house,Ghost* ghost){
     //first add hunters to the head
     for (int i = 0; i < NUM_HUNTERS; ++i) {
         addHunterToRoom(house->totalRoomList.head->data, house->huntersInHouse[i]);
     }
+
+    int randRoom = randInt(1,house->totalRoomList.count);
+    RoomNode* currRoomNode = house->totalRoomList.head;
+
+    for (int i = 0; i <r oomIndex; ++i) {
+        currRoomNode = currRoomNode->next;
+    }
+
+    ghost->room = currRoomNode->data;
+    l_ghostInit(ghost->ghostType, ghost->room->name);
 }
 
 /*

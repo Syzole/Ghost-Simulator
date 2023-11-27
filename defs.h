@@ -68,6 +68,12 @@ typedef struct {
     sem_t semaphore;
 } Room;
 
+typedef struct RoomList {
+    RoomNode* head;
+    RoomNode* tail;
+    int count; //this will be used in the random parts
+} RoomList;
+
 typedef struct {
     Room *data;
     struct RoomNode *next;
