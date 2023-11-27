@@ -26,37 +26,6 @@ enum EvidenceType { EMF, TEMPERATURE, FINGERPRINTS, SOUND, EV_COUNT, EV_UNKNOWN 
 enum GhostClass { POLTERGEIST, BANSHEE, BULLIES, PHANTOM, GHOST_COUNT, GH_UNKNOWN };
 enum LoggerDetails { LOG_FEAR, LOG_BORED, LOG_EVIDENCE, LOG_SUFFICIENT, LOG_INSUFFICIENT, LOG_UNKNOWN };
 
-// Helper Utilies
-int randInt(int,int);        // Pseudo-random number generator function
-float randFloat(float, float);  // Pseudo-random float generator function
-enum GhostClass randomGhost();  // Return a randomly selected a ghost type
-void ghostToString(enum GhostClass, char*); // Convert a ghost type to a string, stored in output paremeter
-void evidenceToString(enum EvidenceType, char*); // Convert an evidence type to a string, stored in output parameter
-
-// Logging Utilities
-void l_hunterInit(char* name, enum EvidenceType equipment);
-void l_hunterMove(char* name, char* room);
-void l_hunterReview(char* name, enum LoggerDetails reviewResult);
-void l_hunterCollect(char* name, enum EvidenceType evidence, char* room);
-void l_hunterExit(char* name, enum LoggerDetails reason);
-void l_ghostInit(enum GhostClass type, char* room);
-void l_ghostMove(char* room);
-void l_ghostEvidence(enum EvidenceType evidence, char* room);
-void l_ghostExit(enum LoggerDetails reason);
-
-//Functions that we have defined
-
-//house.c
-void initGhost(Ghost* ghost);
-void initHunter(Hunter* hunter, House* house, int numHunt);
-void initEvidenceList(EvidenceList* evidenceList);
-void initRoomList(RoomList* roomList);
-void initHouse(House** house);
-Room* createRoom(char* name);
-void connectRooms(Room* room1, Room* room2);
-void addRoom(RoomList* roomList, Room* room);
-void populateRooms(HouseType* house);
-
 //Structs that we have also defined to use for the program
 
 typedef struct RoomNode {
@@ -111,3 +80,35 @@ typedef struct {
     EvidenceType evType;
     struct EvidenceNode *next;
 } EvidenceNode;
+
+// Helper Utilies
+int randInt(int,int);        // Pseudo-random number generator function
+float randFloat(float, float);  // Pseudo-random float generator function
+enum GhostClass randomGhost();  // Return a randomly selected a ghost type
+void ghostToString(enum GhostClass, char*); // Convert a ghost type to a string, stored in output paremeter
+void evidenceToString(enum EvidenceType, char*); // Convert an evidence type to a string, stored in output parameter
+
+// Logging Utilities
+void l_hunterInit(char* name, enum EvidenceType equipment);
+void l_hunterMove(char* name, char* room);
+void l_hunterReview(char* name, enum LoggerDetails reviewResult);
+void l_hunterCollect(char* name, enum EvidenceType evidence, char* room);
+void l_hunterExit(char* name, enum LoggerDetails reason);
+void l_ghostInit(enum GhostClass type, char* room);
+void l_ghostMove(char* room);
+void l_ghostEvidence(enum EvidenceType evidence, char* room);
+void l_ghostExit(enum LoggerDetails reason);
+
+//Functions that we have defined
+
+//house.c
+void initGhost(Ghost* ghost);
+void initHunter(Hunter* hunter, House* house, int numHunt);
+void initEvidenceList(EvidenceList* evidenceList);
+void initRoomList(RoomList* roomList);
+void initHouse(House** house);
+Room* createRoom(char* name);
+void connectRooms(Room* room1, Room* room2);
+void addRoom(RoomList* roomList, Room* room);
+void populateRooms(HouseType* house);
+
