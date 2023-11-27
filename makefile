@@ -1,19 +1,19 @@
-CCFLAGS = gcc -g -Wall -Wextra
-FILES = main house logger utils
+FILES = main.o house.o logger.o utils.o
 
-all: ${FILES}
+final: ${FILES}
+	gcc -g -Wall -Wextra -o final ${FILES}
 
-main: main.c
-	${CCFLAGS} -o main main.c
+main.o: main.c defs.h
+	gcc -c main.c
 
-house: house.c
-	${CCFLAGS} -o house house.c
+house.o: house.c defs.h
+	gcc -c house.c
 
-logger: logger.c
-	${CCFLAGS} -o logger logger.c
+logger.o: logger.c defs.h
+	gcc -c logger.c
 
-utils: utils.c
-	${CCFLAGS} -o util util.c
+utils.o: utils.c defs.h
+	gcc -c util.c
 
 clean:
-	rm -f ${FILES}
+	rm -f final ${FILES}
