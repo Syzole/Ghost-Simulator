@@ -17,13 +17,12 @@ void initEvidenceList(EvidenceList* evidenceList){
     evidenceList->tail = NULL;
 }
 
-void addHunterToRoom(Room* room, Hunter* hunter) {
-    room->huntersInRoom[hunter->id] = hunter;
-    hunter->roomIn = room;
-    l_hunterMove(hunter->name, room->name);
-}
 
-void removeHunterFromRoom(Hunter* hunter) {
-    hunter->roomIn->huntersInRoom[hunter->id] = NULL;
-    hunter->roomIn = NULL;
+void moveToNewRoom(Hunter* hunter, Room* newRoom) {
+    if (hunter->roomIn != NULL) {
+        hunter->roomIn->huntersInRoom[hunter->id] = NULL;
+    }
+    newRoom->huntersInRoom[hunter->id] = hunter;
+    hunter->roomIn = newRoom;
+    l_hunterMove(hunter->name, newRoom->name);
 }

@@ -23,7 +23,7 @@ int main()
 void startHunt(House *house,Ghost* ghost){
     //first add hunters to the head
     for (int i = 0; i < NUM_HUNTERS; ++i) {
-        addHunterToRoom(house->rooms.head->data, house->huntersInHouse[i]);
+        moveToNewRoom(house->huntersInHouse[i], house->rooms.head->data);
     }
 
     int randRoom = randInt(1,house->rooms.count);
