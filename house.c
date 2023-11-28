@@ -23,8 +23,9 @@ Room* createRoom(char* name) {
     Room* room = (Room*)malloc(sizeof(Room));
     //copy name
     strcpy(room->name, name);
-    //set pointer of ghost to null and init both lists
+    //set pointer of ghost to null and init both lists and the counter to 0
 
+    room->numHuntersInRoom = 0;
     room->ghost = NULL;    
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomlist));

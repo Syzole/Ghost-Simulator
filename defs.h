@@ -68,6 +68,7 @@ struct Room {
     RoomList roomlist;
     Hunter* huntersInRoom[NUM_HUNTERS];
     sem_t semaphore;
+    int numHuntersInRoom;
 };
 
 struct Hunter {
@@ -112,6 +113,7 @@ void l_ghostExit(enum LoggerDetails reason);
 
 // Forward declarations for functions in Ghost.c
 void initGhost(Ghost* ghost);
+int moveGhost(Ghost* ghost);
 
 // Forward declarations for functions in Hunter.c
 void initHunter(Hunter* hunter, House* house, int numHunt);
