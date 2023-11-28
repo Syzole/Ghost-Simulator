@@ -64,6 +64,7 @@ void checkForEv(Hunter* hunter) {
             previousEvidence = currentEvidence;
             currentEvidence = currentEvidence->next;
         }
+        l_hunterReview(hunter->name, LOG_INSUFFICIENT);
     }
 }
 
