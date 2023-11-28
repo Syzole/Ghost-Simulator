@@ -117,6 +117,8 @@ void initGhost(Ghost* ghost);
 void initHunter(Hunter* hunter, House* house, int numHunt);
 void initEvidenceList(EvidenceList* evidenceList);
 void moveToNewRoom(Hunter* hunter, Room* newRoom);
+void checkForEv(Hunter* hunter);
+void addEvidenceToCollection(Hunter* hunter, EvidenceType evidenceType);
 
 // Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);
