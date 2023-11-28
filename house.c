@@ -53,6 +53,7 @@ void connectRooms(Room* room1, Room* room2){
         room1->roomlist.tail->next = node2;
         room1->roomlist.tail = node2;
     }
+    room1->roomlist.count++;
 
     if (room2->roomlist.head == NULL) {
         room2->roomlist.head = node1;
@@ -62,6 +63,7 @@ void connectRooms(Room* room1, Room* room2){
         room2->roomlist.tail->next = node1;
         room2->roomlist.tail = node1;
     }
+    room2->roomlist.count++;
 
 }
 
