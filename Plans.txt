@@ -1,0 +1,27 @@
+Init is done: yay, keep an eye out for not init propley that may cause problems in the future, yooo this for future person readin this, yeah hi, uh this guy writing this had an idea for the rooms to have an int value to count how many hunters were in a given room at once, trust me its for the ghost to know if its all good to enter or not
+
+Hunter actions:
+First check if the hunter is in room with ghost, like if the pointers match for example hmmmmmmm º _ º
+
+Then roll for the options:{
+Look for evidence, log result of if found anything or nada
+or
+Move to another room, adjust pointers as needed
+or 
+Do a evCheck, asking them selves hmmmm is we good or do we need more (cause appernalty living is optional in this simulation)
+}
+then check if they is made scared or mad bored, and then dip if either apply
+
+Ghost:
+If a ghost is a room with hunter at start, no longer bored
+else tick up by 1
+Move to another room if it can, if not re roll(update da pointers kk?)
+or
+leave one of the three ev types it can drop(do u think the ghost just knocks a lamp and calls it a day?)
+
+if the ghost is ever too bored he will also just dip, maybe check if we should do that first or not kinda important
+
+and then print everything at the end saying all the stuff like hunters win yay or lose boo
+
+
+
