@@ -26,7 +26,7 @@ Room* createRoom(char* name) {
     //set pointer of ghost to null and init both lists and the counter to 0
 
     room->numHuntersInRoom = 0;
-    room->ghost = NULL;    
+    room->ghostInRoom = NULL;    
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomlist));
     return room;
@@ -44,7 +44,7 @@ void connectRooms(Room* room1, Room* room2){
     node2->next = NULL;
 
 
-    //add based to end if list, checking if empty to adjust head or just the tail
+    //add based to end if list, checking if empty to adjust head or just the tail, plus increment the amount of rooms
     if(room1->roomlist.head==NULL){
         room1->roomlist.head=node2;
         room1->roomlist.tail=node2;

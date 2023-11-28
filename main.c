@@ -33,6 +33,7 @@ void startHunt(House *house,Ghost* ghost){
         currRoomNode = currRoomNode->next;
     }
 
-    ghost->room = currRoomNode->data;
-    l_ghostInit(ghost->ghostType, ghost->room->name);
+    ghost->roomIn = currRoomNode->data;
+    currRoomNode->data->ghostInRoom = ghost;
+    l_ghostInit(ghost->ghostType, ghost->roomIn->name);
 }

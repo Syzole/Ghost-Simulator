@@ -63,7 +63,7 @@ struct RoomList {
 
 struct Room {
     char name[MAX_STR];
-    Ghost* ghost;
+    Ghost* ghostInRoom;
     EvidenceList ev;
     RoomList roomlist;
     Hunter* huntersInRoom[NUM_HUNTERS];
@@ -83,7 +83,7 @@ struct Hunter {
 struct Ghost {
     GhostClass ghostType;
     int boredom;
-    Room* room;
+    Room* roomIn;
 };
 
 
