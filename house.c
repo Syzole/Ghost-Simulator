@@ -12,10 +12,9 @@ void initHouse(House* house) {
     
     //init hunters and add to house array
     for (int i = 0; i < NUM_HUNTERS; ++i) {
-        Hunter* newHunter = (Hunter*)malloc(sizeof(Hunter));
-        initHunter(newHunter, house, i);
-        house->huntersInHouse[i] = newHunter;
+        initHunter(&(house->huntersInHouse[i]), house, i);
     }
+    initGhost(&(house->ghost));
 }
 
 Room* createRoom(char* name) {

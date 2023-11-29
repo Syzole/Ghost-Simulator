@@ -88,8 +88,9 @@ struct Ghost {
 
 
 struct House {
-    Hunter* huntersInHouse[NUM_HUNTERS];
+    Hunter huntersInHouse[NUM_HUNTERS];
     RoomList rooms;
+    Ghost ghost;
     EvidenceList foundEvidence;
 };
 
