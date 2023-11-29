@@ -24,10 +24,13 @@ Room* createRoom(char* name) {
     strcpy(room->name, name);
     //set pointer of ghost to null and init both lists and the counter to 0
 
+    sem_init(&(room->semaphore), 0, 1);
+
     room->numHuntersInRoom = 0;
     room->ghostInRoom = NULL;    
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomlist));
+
     return room;
 }
 
