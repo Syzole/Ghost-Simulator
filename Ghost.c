@@ -26,7 +26,7 @@ void initGhost(Ghost* ghost) {
             ghost->allowedEvidence[2] = SOUND;
             break;
         default:
-        //this prob wont happen
+            //this prob wont happen
             break;
     }
     //l_ghostInit(ghost->ghostType, ghost->roomIn->name);
