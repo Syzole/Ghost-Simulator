@@ -82,6 +82,7 @@ struct Hunter {
 
 struct Ghost {
     GhostClass ghostType;
+    EvidenceType allowedEvidence[3];
     int boredom;
     Room* roomIn;
 };
@@ -115,6 +116,7 @@ void l_ghostExit(enum LoggerDetails reason);
 // Forward declarations for functions in Ghost.c
 void initGhost(Ghost* ghost);
 int moveGhost(Ghost* ghost, Room* room);
+void doNothing();
 
 // Forward declarations for functions in Hunter.c
 void initHunter(Hunter* hunter, House* house, int numHunt);
