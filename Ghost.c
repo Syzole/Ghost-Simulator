@@ -8,8 +8,19 @@ void initGhost(Ghost* ghost) {
 }
 
 int moveGhost(Ghost* ghost, Room* room){
-    // if (ghost->roomIn != NULL) {
-    //     ghost->roomIn->ghost
-    // }
+    if(room->numHuntersInRoom>0){
+        //is the ghost in the same place, yes so return true
+        return C_TRUE;
+    }
+
+    if (ghost->roomIn != NULL) {
+        ghost->roomIn->ghostInRoom = NULL;
+    }
+
+    room->ghostInRoom = ghost;
+    ghost->roomIn = room;
+    //did ghost stay in his place, no so return false
+    return C_FALSE;
+
 
 }
