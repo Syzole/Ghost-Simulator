@@ -87,7 +87,7 @@ void addRoom(RoomList* roomList, Room* room) {
 
 void addEvidenceToRoom(Room* room, EvidenceType evidence) {
     EvidenceNode* newNode = (EvidenceNode*)malloc(sizeof(EvidenceNode));
-    newNode->data = evidence;
+    newNode->evType = evidence;
     newNode->next = NULL;
 
     if (room->ev.head == NULL) {
