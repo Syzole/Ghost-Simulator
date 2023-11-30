@@ -19,6 +19,7 @@
 #define FEAR_MAX        10
 #define LOGGING         C_TRUE
 #define ALLOWED_EVIDENCE 3
+#define EVIDENCE_TYPES 4
 
 // Enums
 typedef enum EvidenceType EvidenceType;
@@ -125,6 +126,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt);
 void initEvidenceList(EvidenceList* evidenceList);
 void moveToNewRoom(Hunter* hunter, Room* newRoom);
 void checkForEv(Hunter* hunter);
+void evReview(Hunter* hunter);
 
 // Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);

@@ -35,7 +35,7 @@ void checkForEv(Hunter* hunter) {
     EvidenceNode* previousEvidence = NULL;
 
     while (currentEvidence != NULL) {
-        //if evidnce matches
+        //if evidence matches
         if (hunter->canRead == currentEvidence->evType) {
             EvidenceType collectedEvidence = hunter->canRead;
 
@@ -67,4 +67,32 @@ void checkForEv(Hunter* hunter) {
     }
     l_hunterReview(hunter->name, LOG_INSUFFICIENT);
     
+}
+
+void evReview(Hunter* hunter){
+    EvidenceNode* currEv = hunter->collect->head;
+    EvidenceNode* prevEv = NULL;
+    int unique = 0;
+    int uniqueEvs[ALLOWED_EVIDENCE];
+    //go through the hunters' evidence list until the end (NULL), checking for 3 unique types of evidence
+    for(int i = 0; i < EVIDENCE_TYPES; i++){
+        while(currEv != NULL){
+            if(currEv->evType == (enum EvidenceType)i){
+                uniqueEvs[unique] = (enum EvidenceType)i;
+                unique++;
+            }
+            prevEv = currEv;
+            currEv = currEv->next;
+        }
+        currEv = hunter->collect->head;
+        prevEv = NULL;
+    }
+
+    if(unique <= 2){
+        l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+    } else{
+        l_hunterReview(hunter->name, LOG_SUFFICIENT);
+        // REMEMBER TO FIND RESULTING GHOST CLASS
+    }
+
 }
