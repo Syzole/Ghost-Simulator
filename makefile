@@ -19,7 +19,7 @@ logger.o: logger.c defs.h
 	gcc -c logger.c
 
 utils.o: utils.c defs.h
-	gcc -c util.c
+	gcc -c utils.c
 
 clean:
 	rm -f final ${FILES}
