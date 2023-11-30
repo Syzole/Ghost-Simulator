@@ -30,44 +30,43 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
 }
 
 void checkForEv(Hunter* hunter) {
-    if (hunter->roomIn != NULL) {
-        //start at head
-        EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
-        EvidenceNode* previousEvidence = NULL;
+    //start at head
+    EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
+    EvidenceNode* previousEvidence = NULL;
 
-        while (currentEvidence != NULL) {
-            //if evidnce matches
-            if (hunter->canRead == currentEvidence->evType) {
-                EvidenceType collectedEvidence = hunter->canRead;
+    while (currentEvidence != NULL) {
+        //if evidnce matches
+        if (hunter->canRead == currentEvidence->evType) {
+            EvidenceType collectedEvidence = hunter->canRead;
 
-                addEvidenceToCollection(hunter, collectedEvidence);
+            addEvidenceToCollection(hunter, collectedEvidence);
 
-                l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
+            l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
 
-                // edge case if removed at head
-                if (previousEvidence != NULL) {
-                    previousEvidence->next = currentEvidence->next;
-                } 
-                else {
-                    hunter->roomIn->ev.head = currentEvidence->next;
-                }
-
-                // edge case, if removed at tail
-                if (currentEvidence == hunter->roomIn->ev.tail) {
-                    hunter->roomIn->ev.tail = previousEvidence;
-                }
-
-                // free the mem
-                free(currentEvidence);
-
-                return;
+            // edge case if removed at head
+            if (previousEvidence != NULL) {
+                previousEvidence->next = currentEvidence->next;
+            } 
+            else {
+                hunter->roomIn->ev.head = currentEvidence->next;
             }
-            //go next
-            previousEvidence = currentEvidence;
-            currentEvidence = currentEvidence->next;
+
+            // edge case, if removed at tail
+            if (currentEvidence == hunter->roomIn->ev.tail) {
+                hunter->roomIn->ev.tail = previousEvidence;
+            }
+
+            // free the mem
+            free(currentEvidence);
+
+            return;
         }
-        l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+        //go next
+        previousEvidence = currentEvidence;
+        currentEvidence = currentEvidence->next;
     }
+    l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+    
 }
 
 void addEvidenceToCollection(Hunter* hunter, EvidenceType evidenceType){

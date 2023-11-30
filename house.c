@@ -98,7 +98,6 @@ void addEvidenceToRoom(Room* room, EvidenceType evidence) {
         room->ev.tail->next = newNode;
         room->ev.tail = newNode;
     }
-    room->ev.count++;
 
 }
 /*
