@@ -86,3 +86,19 @@ void ghostToString(enum GhostClass ghost, char* buffer) {
             break;   
     }
 }
+
+void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType) {
+    EvidenceNode* newEvidence = (EvidenceNode*)malloc(sizeof(EvidenceNode));
+
+    newEvidence->evType = evidenceType;
+    newEvidence->next = NULL;
+
+    if (evidenceList->head == NULL) {
+        evidenceList->head = newEvidence;
+        evidenceList->tail = newEvidence;
+    } 
+    else {
+        evidenceList->tail->next = newEvidence;
+        evidenceList->tail = newEvidence;
+    }
+}
