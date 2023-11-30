@@ -21,6 +21,7 @@
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
 #define NUM_GHOST_CHOICES 3
+#define NUM_HUNTER_CHOICES 4
 
 // Enums
 typedef enum EvidenceType EvidenceType;
@@ -81,6 +82,7 @@ struct Hunter {
     EvidenceType canRead;
     EvidenceList* collect;
     int fear;
+    int boredom;
 };
 
 struct Ghost {
@@ -127,7 +129,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt);
 void initEvidenceList(EvidenceList* evidenceList);
 void moveToNewRoom(Hunter* hunter, Room* newRoom);
 void checkForEv(Hunter* hunter);
-void evReview(Hunter* hunter);
+int evReview(Hunter* hunter);
 
 // Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);
@@ -142,6 +144,8 @@ Room* selectRandomRoom(RoomList* roomlist);
 // Forward declarations for functions in main.c
 void startHunt(House *house, Ghost* ghost);
 void* ghost_thread(void* arg);
+void* hunter_thread(void* arg);
 
 //New forward declarations for function in utils.c
 void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType);
+void checkIfSameRoom(Hunter* hunter);

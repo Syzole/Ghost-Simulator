@@ -79,3 +79,41 @@ void* ghost_thread(void* arg){
         }
     }
 }
+
+void* hunter_thread(void* arg){
+    Hunter* hunter = (Hunter*) arg;
+    int shouldContinue = 1;
+    int winCondition = 0;
+
+    while(C_TRUE){ //y?
+        usleep(HUNTER_WAIT);
+        
+        checkIfSameRoom(hunter);
+        while(shouldContinue){
+            int choice = randInt(0, NUM_HUNTER_CHOICES);
+            switch(choice){
+                case 0:
+                    Room* selectRoom;
+                    selectRoom = selectRandomRoom(&(hunter->roomIn->roomlist));
+                    moveToNewRoom(hunter, selectRoom);
+                    shouldContinue = 0;
+                    break;
+                case 1:
+                    checkForEv(hunter);
+                    shouldContinue = 0;
+                    break;
+                case 2:
+                    winCondition = evReview(hunter);
+                    shouldContinue = 0;
+                    break;
+                case 3:
+                    if(hunter->boredom == BOREDOM_MAX || hunter->fear == FEAR_MAX || winCondition == 1){
+                        pthread_exit(NULL);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}

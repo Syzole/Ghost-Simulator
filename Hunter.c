@@ -9,6 +9,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->canRead = (EvidenceType)(numHunt);
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
+    hunter->boredom = 0;
     l_hunterInit(hunter->name,hunter->canRead);
 }
 
@@ -69,7 +70,7 @@ void checkForEv(Hunter* hunter) {
     
 }
 
-void evReview(Hunter* hunter){
+int evReview(Hunter* hunter){
     EvidenceNode* currEv = hunter->collect->head;
     EvidenceNode* prevEv = NULL;
     int unique = 0;
@@ -88,10 +89,12 @@ void evReview(Hunter* hunter){
         prevEv = NULL;
     }
 
-    if(unique <= 2){
-        l_hunterReview(hunter->name, LOG_INSUFFICIENT);
-    } else{
+    if(unique > 2){
         l_hunterReview(hunter->name, LOG_SUFFICIENT);
+        return C_TRUE; // pretty sure this is 1
+    } else{
+        l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+        return C_FALSE;
         // REMEMBER TO FIND RESULTING GHOST CLASS
     }
 

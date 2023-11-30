@@ -102,3 +102,12 @@ void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidence
         evidenceList->tail = newEvidence;
     }
 }
+
+void checkIfSameRoom(Hunter* hunter){
+    if(hunter->roomIn->ghostInRoom != NULL){
+        hunter->fear++;
+        hunter->boredom = 0;
+    } else{
+        hunter->boredom++;
+    }
+}
