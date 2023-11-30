@@ -1,11 +1,22 @@
 #include "defs.h"
 
+/*  
+    Initializes the provided list of rooms.
+        out: roomList - a list of rooms whose head, tail, and number of nodes are set
+        to default values.
+*/
 void initRoomList(RoomList* roomList){
     roomList->head = NULL;
     roomList->tail = NULL;
     roomList->count = 0;
 }
 
+/*  
+    Initializes the provided house by calling functions that initialize all the houses'
+    members.
+        out: house - the house whose room list, evidence list, hunters, and ghost are
+        initialized through function calls.
+*/
 void initHouse(House* house) {
     initRoomList(&((house)->rooms));
     initEvidenceList(&((house)->foundEvidence));
@@ -17,6 +28,14 @@ void initHouse(House* house) {
     initGhost(&(house->ghost));
 }
 
+/*  
+    Dynamically allocates a new room, setting its name to the provided string parameter
+    as well as setting the room's other members (number of hunters present, a pointer to
+    the ghost, list of evidence, and room list) to default values. It also initializes a
+    semaphore that has control over those entering and exiting the room.
+        in: name - the provided name is used.
+        returns: a new room with all its members initialized and a semaphore for entering/exiting.
+*/
 Room* createRoom(char* name) {
     //Allocate space
     Room* room = (Room*)malloc(sizeof(Room));
@@ -34,6 +53,11 @@ Room* createRoom(char* name) {
     return room;
 }
 
+/*  
+    Dynamically allocates two room list nodes in order to add the two provided rooms to
+    each others' room lists.
+        out: room1, room2 - both are provided room whose room lists are modified.
+*/
 void connectRooms(Room* room1, Room* room2){
     //make space for both rooms
     RoomNode* node1 = (RoomNode*)malloc(sizeof(RoomNode));
@@ -69,6 +93,12 @@ void connectRooms(Room* room1, Room* room2){
 
 }
 
+/*  
+    Dynamically allocates a room node for the house's room list and adds the given room
+    to that list.
+        out: roomlist - the house's room list meant to receive a room.
+        in: room - the room to be added to the roomlist.
+*/
 void addRoom(RoomList* roomList, Room* room) {
     RoomNode* newNode = (RoomNode*)malloc(sizeof(RoomNode));
     newNode->data = room;
@@ -140,6 +170,12 @@ void populateRooms(House* house) {
     addRoom(&house->rooms, utility_room);
 }
 
+/*  
+    Randomly selects an adjacent room for someone to move into by iterating through the
+    given room list until a random index is reached.
+        in: roomlist - the current room's list of connected rooms
+        returns: the random room's data
+*/
 Room* selectRandomRoom(RoomList* roomlist){
     int randIndex = randInt(0, roomlist->count);
     RoomNode* currentRoom = roomlist->head;

@@ -9,7 +9,7 @@ int main()
     // Note: This code will not compile until you have implemented the house functions and structures
     House house;
 
-    initHouse(&house);
+    initHouse(&house); // REMEMBER TO EDIT COMMENTS WHEN NEW FEATURES ARE ADDED TO FUNCTIONS
     populateRooms(&house);
 
     startHunt(&house, &(house.ghost));
