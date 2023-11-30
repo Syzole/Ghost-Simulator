@@ -4,6 +4,7 @@ void initGhost(Ghost* ghost) {
     ghost->ghostType = randomGhost();
     ghost->boredom = 0;
     ghost->roomIn = NULL;
+    //switch cases to check what ev the ghost can drop
     switch (ghost->ghostType) {
         case POLTERGEIST:
             ghost->allowedEvidence[0] = EMF;
@@ -53,5 +54,11 @@ void doNothing(){
 }
 
 void dropEvidence(Ghost* ghost){
+    int randomIndex = randInt(0, 3);
+
+    EvidenceType addedEv = ghost->allowedEvidence[randomIndex];
     
+    addEvidenceToRoom(ghost->roomIn, addedEv);
+
+    l_ghostEvidence(addedEv, ghost->roomIn->name);
 }

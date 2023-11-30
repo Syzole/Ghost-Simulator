@@ -18,6 +18,7 @@
 #define NUM_HUNTERS     4
 #define FEAR_MAX        10
 #define LOGGING         C_TRUE
+#define ALLOWED_EVIDENCE 3
 
 // Enums
 typedef enum EvidenceType EvidenceType;
@@ -82,7 +83,7 @@ struct Hunter {
 
 struct Ghost {
     GhostClass ghostType;
-    EvidenceType allowedEvidence[3];
+    EvidenceType allowedEvidence[ALLOWED_EVIDENCE];
     int boredom;
     Room* roomIn;
 };

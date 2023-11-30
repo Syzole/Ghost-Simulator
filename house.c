@@ -85,6 +85,22 @@ void addRoom(RoomList* roomList, Room* room) {
     roomList->count++;
 }
 
+void addEvidenceToRoom(Room* room, EvidenceType evidence) {
+    EvidenceNode* newNode = (EvidenceNode*)malloc(sizeof(EvidenceNode));
+    newNode->data = evidence;
+    newNode->next = NULL;
+
+    if (room->ev.head == NULL) {
+        room->ev.head = newNode;
+        room->ev.tail = newNode;
+    } 
+    else {
+        room->ev.tail->next = newNode;
+        room->ev.tail = newNode;
+    }
+    room->ev.count++;
+
+}
 /*
     Dynamically allocates several rooms and populates the provided house.
     Note: You may modify this as long as room names and connections are maintained.
