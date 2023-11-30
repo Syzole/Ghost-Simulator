@@ -58,7 +58,7 @@ void dropEvidence(Ghost* ghost){
 
     EvidenceType addedEv = ghost->allowedEvidence[randomIndex];
     
-    addEvidenceToRoom(ghost->roomIn, addedEv);
+    addEvidenceToCollection(&(ghost->roomIn->ev), addedEv);
 
     l_ghostEvidence(addedEv, ghost->roomIn->name);
 }

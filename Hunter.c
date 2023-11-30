@@ -39,7 +39,7 @@ void checkForEv(Hunter* hunter) {
         if (hunter->canRead == currentEvidence->evType) {
             EvidenceType collectedEvidence = hunter->canRead;
 
-            addEvidenceToCollection(hunter, collectedEvidence);
+            addEvidenceToCollection(hunter->collect, collectedEvidence);
 
             l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
 
@@ -69,19 +69,18 @@ void checkForEv(Hunter* hunter) {
     
 }
 
-void addEvidenceToCollection(Hunter* hunter, EvidenceType evidenceType){
-
+void addEvidenceToCollection(EvidenceList* evidenceList, EvidenceType evidenceType) {
     EvidenceNode* newEvidence = (EvidenceNode*)malloc(sizeof(EvidenceNode));
 
     newEvidence->evType = evidenceType;
     newEvidence->next = NULL;
 
-    if (hunter->collect->head == NULL) {
-        hunter->collect->head = newEvidence;
-        hunter->collect->tail = newEvidence;
+    if (evidenceList->head == NULL) {
+        evidenceList->head = newEvidence;
+        evidenceList->tail = newEvidence;
     } 
     else {
-        hunter->collect->tail->next = newEvidence;
-        hunter->collect->tail = newEvidence;
+        evidenceList->tail->next = newEvidence;
+        evidenceList->tail = newEvidence;
     }
 }
