@@ -139,3 +139,14 @@ void populateRooms(House* house) {
     addRoom(&house->rooms, garage);
     addRoom(&house->rooms, utility_room);
 }
+
+Room* selectRandomRoom(RoomList* roomlist){
+    int randIndex = randInt(0, roomlist->count);
+    RoomNode* currentRoom = roomlist->head;
+    
+    for (int i = 0; i < randIndex; ++i) {
+        currentRoom = currentRoom->next;
+    }
+
+    return currentRoom->data;
+}

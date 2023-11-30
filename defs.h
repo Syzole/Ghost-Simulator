@@ -20,6 +20,7 @@
 #define LOGGING         C_TRUE
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
+#define NUM_GHOST_CHOICES 3
 
 // Enums
 typedef enum EvidenceType EvidenceType;
@@ -136,9 +137,11 @@ void connectRooms(Room* room1, Room* room2);
 void addRoom(RoomList* roomList, Room* room);
 void populateRooms(House* house);
 void addEvidenceToRoom(Room* room, EvidenceType evidence);
+Room* selectRandomRoom(RoomList* roomlist);
 
 // Forward declarations for functions in main.c
-void startHunt(House *house,Ghost* ghost);
+void startHunt(House *house, Ghost* ghost);
+void* ghost_thread(void* arg);
 
 //New forward declarations for function in utils.c
 void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType);

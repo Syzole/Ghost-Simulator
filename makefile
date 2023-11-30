@@ -1,7 +1,7 @@
 FILES = main.o house.o Ghost.o Hunter.o logger.o utils.o
 
 final: ${FILES}
-	gcc -g -Wall -Wextra -o final ${FILES}
+	gcc -g -Wall -Wextra -o final ${FILES} -lpthread
 
 main.o: main.c defs.h
 	gcc -c main.c
