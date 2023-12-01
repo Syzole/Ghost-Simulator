@@ -24,11 +24,14 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     if (hunter->roomIn != NULL) {
         hunter->roomIn->numHuntersInRoom--;
         hunter->roomIn->huntersInRoom[hunter->id] = NULL;
+        sem_post(&hunter->roomIn->semaphore);
     }
+    sem_wait(&newRoom->semaphore);
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
     newRoom->numHuntersInRoom++;
     l_hunterMove(hunter->name, newRoom->name);
+    sem_post(&newRoom->semaphore);
 }
 
 void checkForEv(Hunter* hunter) {
