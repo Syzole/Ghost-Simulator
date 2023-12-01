@@ -77,7 +77,8 @@ void checkForEv(Hunter* hunter) {
         currentEvidence = currentEvidence->next;
     }
     // failed evidence collection
-    l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name);
+    printf("failed evidence collection\n");
+    // l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name); no thank you
     sem_post(&(hunter->collect->semaphore));
     
 }
