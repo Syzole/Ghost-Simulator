@@ -10,11 +10,11 @@
 // Constants
 #define MAX_STR         64
 #define MAX_RUNS        50
-#define BOREDOM_MAX     50
+#define BOREDOM_MAX     100
 #define C_TRUE          1
 #define C_FALSE         0
 #define HUNTER_WAIT     5000
-#define GHOST_WAIT      10000
+#define GHOST_WAIT      600
 #define NUM_HUNTERS     4
 #define FEAR_MAX        1000
 #define LOGGING         C_TRUE
@@ -91,6 +91,7 @@ struct Ghost {
     EvidenceType allowedEvidence[ALLOWED_EVIDENCE];
     int boredom;
     Room* roomIn;
+    House* house;
 };
 
 
@@ -120,7 +121,7 @@ void l_ghostEvidence(enum EvidenceType evidence, char* room);
 void l_ghostExit(enum LoggerDetails reason);
 
 // Forward declarations for functions in Ghost.c
-void initGhost(Ghost* ghost);
+void initGhost(Ghost* ghost, House* house);
 int moveGhost(Ghost* ghost, Room* room);
 void doNothing();
 void dropEvidence(Ghost* ghost);

@@ -25,7 +25,7 @@ void initHouse(House* house) {
     for (int i = 0; i < NUM_HUNTERS; ++i) {
         initHunter(&(house->huntersInHouse[i]), house, i);
     }
-    initGhost(&(house->ghost));
+    initGhost(&(house->ghost), house);
 }
 
 /*  

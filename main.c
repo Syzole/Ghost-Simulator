@@ -16,17 +16,17 @@ int main()
   
     pthread_t g, h1, h2, h3, h4;
 
-    // pthread_create(&g, NULL, ghost_thread, &(house.ghost));
+    pthread_create(&g, NULL, ghost_thread, &(house.ghost));
     pthread_create(&h1, NULL, hunter_thread, &(house.huntersInHouse[0]));
     pthread_create(&h2, NULL, hunter_thread, &(house.huntersInHouse[1]));
-    pthread_create(&h3, NULL, hunter_thread, &(house.huntersInHouse[2]));
-    pthread_create(&h4, NULL, hunter_thread, &(house.huntersInHouse[3]));
+    // pthread_create(&h3, NULL, hunter_thread, &(house.huntersInHouse[2]));
+    // pthread_create(&h4, NULL, hunter_thread, &(house.huntersInHouse[3]));
 
-    // pthread_join(g, NULL);
+    pthread_join(g, NULL);
     pthread_join(h1, NULL);
     pthread_join(h2, NULL);
-    pthread_join(h3, NULL);
-    pthread_join(h4, NULL);
+    // pthread_join(h3, NULL);
+    // pthread_join(h4, NULL);
 
     return 0;
 }
@@ -70,13 +70,17 @@ void* ghost_thread(void* arg){
                     shouldContinue = 0;
                     break;
                 case 1:
+                    sem_wait(&(ghost->house->foundEvidence.semaphore));
                     dropEvidence(ghost);
                     shouldContinue = 0;
+                    sem_post(&(ghost->house->foundEvidence.semaphore));
                     break;
                 case 2:
                     Room* selectRoom;
                     selectRoom = selectRandomRoom(&(ghost->roomIn->roomlist));
+                    sem_wait(&(ghost->house->foundEvidence.semaphore));
                     shouldContinue = moveGhost(ghost, selectRoom);
+                    sem_post(&(ghost->house->foundEvidence.semaphore));
                     break;
                 default:
                     //empty case

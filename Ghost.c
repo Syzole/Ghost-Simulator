@@ -1,9 +1,10 @@
 #include "defs.h"
 
-void initGhost(Ghost* ghost) {
+void initGhost(Ghost* ghost, House* house) {
     ghost->ghostType = randomGhost();
     ghost->boredom = 0;
     ghost->roomIn = NULL;
+    ghost->house = house;
     //switch cases to check what ev the ghost can drop
     switch (ghost->ghostType) {
         case POLTERGEIST:
