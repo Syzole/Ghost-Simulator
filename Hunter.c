@@ -41,6 +41,23 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     
 }
 
+int isUnique(EvidenceList* evidenceList, EvidenceType evidenceType){ // might cause segfault
+    EvidenceNode* currHEv = evidenceList->head;
+    EvidenceNode* prevHEv = NULL;
+    // returns false if the evidence type is found in hunters' shared evidence
+    while(currHEv != NULL){
+        if(currHEv->evType == evidenceType){
+            printf("not unique %d", evidenceType);
+            return C_FALSE;
+        }
+        prevHEv = currHEv;
+        currHEv = currHEv->next;
+    }
+    // returns true if unique
+    printf("unique %d", evidenceType);
+    return C_TRUE;
+}
+
 void checkForEv(Hunter* hunter) {
     //start at head
     EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
@@ -51,23 +68,25 @@ void checkForEv(Hunter* hunter) {
         if (hunter->canRead == currentEvidence->evType) {
             EvidenceType collectedEvidence = hunter->canRead;
 
-            addEvidenceToEvidenceList(hunter->collect, collectedEvidence);
+            if(isUnique(hunter->collect, collectedEvidence)){
+                addEvidenceToEvidenceList(hunter->collect, collectedEvidence);
 
-            sem_wait(&(hunter->house->houseSemaphore));
-            l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
-            sem_post(&(hunter->house->houseSemaphore));
+                sem_wait(&(hunter->house->houseSemaphore));
+                l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
+                sem_post(&(hunter->house->houseSemaphore));
 
-            // edge case if removed at head
-            if (previousEvidence != NULL) {
-                previousEvidence->next = currentEvidence->next;
-            } 
-            else {
-                hunter->roomIn->ev.head = currentEvidence->next;
-            }
+                // edge case if removed at head
+                if (previousEvidence != NULL) {
+                    previousEvidence->next = currentEvidence->next;
+                } 
+                else {
+                    hunter->roomIn->ev.head = currentEvidence->next;
+                }
 
-            // edge case, if removed at tail
-            if (currentEvidence == hunter->roomIn->ev.tail) {
-                hunter->roomIn->ev.tail = previousEvidence;
+                // edge case, if removed at tail
+                if (currentEvidence == hunter->roomIn->ev.tail) {
+                    hunter->roomIn->ev.tail = previousEvidence;
+                }
             }
 
             // free the mem
@@ -100,6 +119,7 @@ int evReview(Hunter* hunter){
         while(currEv != NULL){
             if(currEv->evType == (enum EvidenceType)i){
                 uniqueEvs[unique] = (enum EvidenceType)i;
+                printf("%d", uniqueEvs[unique]);
                 unique++;
             }
             prevEv = currEv;
@@ -109,7 +129,7 @@ int evReview(Hunter* hunter){
         prevEv = NULL;
     }
 
-    if(unique > 3){ //
+    if(unique > 2){ //
         sem_wait(&(hunter->house->houseSemaphore));
         l_hunterReview(hunter->name, LOG_SUFFICIENT);
         sem_post(&(hunter->house->houseSemaphore));
