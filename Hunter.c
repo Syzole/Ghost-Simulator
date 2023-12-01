@@ -33,9 +33,11 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     newRoom->numHuntersInRoom++;
     sem_wait(&(hunter->collect->semaphore));
     l_hunterMove(hunter->name, newRoom->name);
+    sem_post(&(hunter->collect->semaphore));
+    
     sem_post(&newRoom->semaphore);
 
-    sem_post(&(hunter->collect->semaphore));
+    
 }
 
 void checkForEv(Hunter* hunter) {

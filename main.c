@@ -19,14 +19,14 @@ int main()
     pthread_create(&g, NULL, ghost_thread, &(house.ghost));
     pthread_create(&h1, NULL, hunter_thread, &(house.huntersInHouse[0]));
     pthread_create(&h2, NULL, hunter_thread, &(house.huntersInHouse[1]));
-    // pthread_create(&h3, NULL, hunter_thread, &(house.huntersInHouse[2]));
-    // pthread_create(&h4, NULL, hunter_thread, &(house.huntersInHouse[3]));
+    pthread_create(&h3, NULL, hunter_thread, &(house.huntersInHouse[2]));
+    pthread_create(&h4, NULL, hunter_thread, &(house.huntersInHouse[3]));
 
     pthread_join(g, NULL);
     pthread_join(h1, NULL);
     pthread_join(h2, NULL);
-    // pthread_join(h3, NULL);
-    // pthread_join(h4, NULL);
+    pthread_join(h3, NULL);
+    pthread_join(h4, NULL);
 
     return 0;
 }
@@ -70,12 +70,14 @@ void* ghost_thread(void* arg){
                     shouldContinue = 0;
                     break;
                 case 1:
+                //maybe shift sems to insde drop ev
                     sem_wait(&(ghost->house->foundEvidence.semaphore));
                     dropEvidence(ghost);
                     shouldContinue = 0;
                     sem_post(&(ghost->house->foundEvidence.semaphore));
                     break;
                 case 2:
+                //maybe shift sems to insde should continue
                     Room* selectRoom;
                     selectRoom = selectRandomRoom(&(ghost->roomIn->roomlist));
                     sem_wait(&(ghost->house->foundEvidence.semaphore));
@@ -90,6 +92,7 @@ void* ghost_thread(void* arg){
         }
         sem_post(&ghost->roomIn->semaphore);
         if(ghost->boredom == BOREDOM_MAX){
+            ghost->roomIn->ghostInRoom = NULL;
             l_ghostExit(LOG_BORED);
             pthread_exit(NULL);
         }
@@ -122,7 +125,7 @@ void* hunter_thread(void* arg){
                     shouldContinue = 0;
                     break;
                 case 2:
-                    winCondition = evReview(hunter);
+                    //winCondition = evReview(hunter);
                     shouldContinue = 0;
                     break;
                 default:
