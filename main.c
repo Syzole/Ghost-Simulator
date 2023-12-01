@@ -129,7 +129,7 @@ void* hunter_thread(void* arg){
             } else{
                 l_hunterExit(hunter->name, LOG_EVIDENCE);
             }
-            pthread_exit(NULL); // add outcome
+            pthread_exit(NULL);
         }
     }
 }
