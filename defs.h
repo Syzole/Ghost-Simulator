@@ -84,7 +84,7 @@ struct Hunter {
     EvidenceList* collect;
     int fear;
     int boredom;
-    House* house;
+    sem_t *houseSemaphore;
 };
 
 struct Ghost {
@@ -92,7 +92,7 @@ struct Ghost {
     EvidenceType allowedEvidence[ALLOWED_EVIDENCE];
     int boredom;
     Room* roomIn;
-    House* house;
+    sem_t *houseSemaphore;
 };
 
 

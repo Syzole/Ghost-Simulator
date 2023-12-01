@@ -4,7 +4,7 @@ void initGhost(Ghost* ghost, House* house) {
     ghost->ghostType = randomGhost();
     ghost->boredom = 0;
     ghost->roomIn = NULL;
-    ghost->house = house;
+    ghost->houseSemaphore = &(house->houseSemaphore);
     //switch cases to check what ev the ghost can drop
     switch (ghost->ghostType) {
         case POLTERGEIST:
@@ -48,9 +48,10 @@ int moveGhost(Ghost* ghost, Room* room){
     room->ghostInRoom = ghost;
     ghost->roomIn = room;
     //did ghost stay in his place, no so return false
-    sem_wait(&(ghost->house->houseSemaphore));
+    sem_wait(ghost->houseSemaphore);
     l_ghostMove(room->name);
-    sem_post(&(ghost->house->houseSemaphore));
+    sem_post(ghost->houseSemaphore);
+
     sem_post(&(room->semaphore));
     return C_FALSE;
 }
@@ -66,7 +67,7 @@ void dropEvidence(Ghost* ghost){
     //printf("The addev is %d", addedEv);
     addEvidenceToEvidenceList(&(ghost->roomIn->ev), addedEv);
 
-    sem_wait(&(ghost->house->houseSemaphore));
+    sem_wait(ghost->houseSemaphore);
     l_ghostEvidence(addedEv, ghost->roomIn->name);
-    sem_post(&(ghost->house->houseSemaphore));
+    sem_post(ghost->houseSemaphore);
 }

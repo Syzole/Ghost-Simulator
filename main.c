@@ -117,11 +117,15 @@ void* hunter_thread(void* arg){
                     shouldContinue = 0;
                     break;
                 case 1:
+                    sem_wait(&(hunter->collect->semaphore));
                     checkForEv(hunter);
+                    sem_post(&(hunter->collect->semaphore));
                     shouldContinue = 0;
                     break;
                 case 2:
+                    sem_wait(&(hunter->collect->semaphore));
                     winCondition = evReview(hunter);
+                    sem_post(&(hunter->collect->semaphore));
                     shouldContinue = 0;
                     break;
                 default:

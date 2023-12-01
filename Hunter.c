@@ -10,7 +10,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
     hunter->boredom = 0;
-    hunter->house = house;
+    hunter->houseSemaphore = &(house->houseSemaphore);
     l_hunterInit(hunter->name,hunter->canRead);
 }
 
@@ -32,9 +32,9 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
     newRoom->numHuntersInRoom++;
-    sem_wait(&(hunter->house->houseSemaphore));
+    sem_wait(hunter->houseSemaphore);
     l_hunterMove(hunter->name, newRoom->name);
-    sem_post(&(hunter->house->houseSemaphore));
+    sem_post(hunter->houseSemaphore);
     
     sem_post(&newRoom->semaphore);
 
@@ -47,14 +47,14 @@ int isUnique(EvidenceList* evidenceList, EvidenceType evidenceType){ // might ca
     // returns false if the evidence type is found in hunters' shared evidence
     while(currHEv != NULL){
         if(currHEv->evType == evidenceType){
-            printf("not unique %d", evidenceType);
+            //printf("not unique %d", evidenceType);
             return C_FALSE;
         }
         prevHEv = currHEv;
         currHEv = currHEv->next;
     }
     // returns true if unique
-    printf("unique %d", evidenceType);
+    //printf("unique %d", evidenceType);
     return C_TRUE;
 }
 
@@ -62,7 +62,6 @@ void checkForEv(Hunter* hunter) {
     //start at head
     EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
     EvidenceNode* previousEvidence = NULL;
-    sem_wait(&(hunter->collect->semaphore));
     while (currentEvidence != NULL) {
         //if evidence matches
         if (hunter->canRead == currentEvidence->evType) {
@@ -71,9 +70,9 @@ void checkForEv(Hunter* hunter) {
             if(isUnique(hunter->collect, collectedEvidence)){
                 addEvidenceToEvidenceList(hunter->collect, collectedEvidence);
 
-                sem_wait(&(hunter->house->houseSemaphore));
+                sem_wait(hunter->houseSemaphore);
                 l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
-                sem_post(&(hunter->house->houseSemaphore));
+                sem_post(hunter->houseSemaphore);
 
                 // edge case if removed at head
                 if (previousEvidence != NULL) {
@@ -91,7 +90,7 @@ void checkForEv(Hunter* hunter) {
 
             // free the mem
             free(currentEvidence);
-            sem_post(&(hunter->collect->semaphore));
+            
             return;
         }
         //go next
@@ -100,11 +99,9 @@ void checkForEv(Hunter* hunter) {
     }
     // failed evidence collection
     //printf("failed evidence collection\n");
-    sem_wait(&(hunter->house->houseSemaphore));
+    sem_wait(hunter->houseSemaphore);
     l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name);
-    sem_post(&(hunter->house->houseSemaphore));
-
-    sem_post(&(hunter->collect->semaphore));
+    sem_post(hunter->houseSemaphore);
     
 }
 
@@ -114,12 +111,11 @@ int evReview(Hunter* hunter){
     int unique = 0;
     int uniqueEvs[ALLOWED_EVIDENCE];
     //go through the hunters' evidence list until the end (NULL), checking for 3 unique types of evidence
-    sem_wait(&(hunter->collect->semaphore));
     for(int i = 0; i < EVIDENCE_TYPES; i++){
         while(currEv != NULL){
             if(currEv->evType == (enum EvidenceType)i){
                 uniqueEvs[unique] = (enum EvidenceType)i;
-                printf("%d", uniqueEvs[unique]);
+                //printf("%d", uniqueEvs[unique]);
                 unique++;
             }
             prevEv = currEv;
@@ -130,19 +126,18 @@ int evReview(Hunter* hunter){
     }
 
     if(unique > 2){ //
-        sem_wait(&(hunter->house->houseSemaphore));
+        sem_wait(hunter->houseSemaphore);
         l_hunterReview(hunter->name, LOG_SUFFICIENT);
-        sem_post(&(hunter->house->houseSemaphore));
+        sem_post(hunter->houseSemaphore);
 
         //printf("sufficient %s", hunter->name);
-        sem_post(&(hunter->collect->semaphore));
         return C_TRUE; // pretty sure this is 1
     } else{
-        sem_wait(&(hunter->house->houseSemaphore));
+        sem_wait(hunter->houseSemaphore);
         l_hunterReview(hunter->name, LOG_INSUFFICIENT);
-        sem_post(&(hunter->house->houseSemaphore));
+        sem_post(hunter->houseSemaphore);
         
-        sem_post(&(hunter->collect->semaphore));
+    
         return C_FALSE;
         // REMEMBER TO FIND RESULTING GHOST CLASS
     }
