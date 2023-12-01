@@ -16,11 +16,11 @@ int main()
 
     pthread_t g, h1, h2, h3, h4;
 
-    pthread_create(&g, NULL, ghost_thread, NULL);
-    pthread_create(&h1, NULL, hunter_thread, NULL);
-    pthread_create(&h2, NULL, hunter_thread, NULL);
-    pthread_create(&h3, NULL, hunter_thread, NULL);
-    pthread_create(&h4, NULL, hunter_thread, NULL);
+    pthread_create(&g, NULL, ghost_thread, &(house.ghost));
+    pthread_create(&h1, NULL, hunter_thread, &(house.huntersInHouse[0]));
+    pthread_create(&h2, NULL, hunter_thread, &(house.huntersInHouse[1]));
+    pthread_create(&h3, NULL, hunter_thread, &(house.huntersInHouse[2]));
+    pthread_create(&h4, NULL, hunter_thread, &(house.huntersInHouse[3]));
 
     pthread_join(g, NULL);
     pthread_join(h1, NULL);
@@ -129,7 +129,7 @@ void* hunter_thread(void* arg){
             } else{
                 l_hunterExit(hunter->name, LOG_EVIDENCE);
             }
-             pthread_exit(NULL); // add outcome
+            pthread_exit(NULL); // add outcome
         }
     }
 }
