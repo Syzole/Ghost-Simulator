@@ -71,18 +71,14 @@ void* ghost_thread(void* arg){
                     break;
                 case 1:
                 //maybe shift sems to insde drop ev
-                    sem_wait(&(ghost->house->foundEvidence.semaphore));
                     dropEvidence(ghost);
                     shouldContinue = 0;
-                    sem_post(&(ghost->house->foundEvidence.semaphore));
                     break;
                 case 2:
                 //maybe shift sems to insde should continue
                     Room* selectRoom;
                     selectRoom = selectRandomRoom(&(ghost->roomIn->roomlist));
-                    sem_wait(&(ghost->house->foundEvidence.semaphore));
                     shouldContinue = moveGhost(ghost, selectRoom);
-                    sem_post(&(ghost->house->foundEvidence.semaphore));
                     break;
                 default:
                     //empty case

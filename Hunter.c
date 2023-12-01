@@ -10,6 +10,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
     hunter->boredom = 0;
+    hunter->house = house;
     l_hunterInit(hunter->name,hunter->canRead);
 }
 
@@ -31,9 +32,9 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
     newRoom->numHuntersInRoom++;
-    sem_wait(&(hunter->collect->semaphore));
+    sem_wait(&(hunter->house->houseSemaphore));
     l_hunterMove(hunter->name, newRoom->name);
-    sem_post(&(hunter->collect->semaphore));
+    sem_post(&(hunter->house->houseSemaphore));
     
     sem_post(&newRoom->semaphore);
 
@@ -52,7 +53,9 @@ void checkForEv(Hunter* hunter) {
 
             addEvidenceToEvidenceList(hunter->collect, collectedEvidence);
 
+            sem_wait(&(hunter->house->houseSemaphore));
             l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
+            sem_post(&(hunter->house->houseSemaphore));
 
             // edge case if removed at head
             if (previousEvidence != NULL) {
@@ -77,8 +80,11 @@ void checkForEv(Hunter* hunter) {
         currentEvidence = currentEvidence->next;
     }
     // failed evidence collection
-    printf("failed evidence collection\n");
-    // l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name); no thank you
+    //printf("failed evidence collection\n");
+    sem_wait(&(hunter->house->houseSemaphore));
+    l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name);
+    sem_post(&(hunter->house->houseSemaphore));
+
     sem_post(&(hunter->collect->semaphore));
     
 }
@@ -104,12 +110,18 @@ int evReview(Hunter* hunter){
     }
 
     if(unique > 3){ //
+        sem_wait(&(hunter->house->houseSemaphore));
         l_hunterReview(hunter->name, LOG_SUFFICIENT);
+        sem_post(&(hunter->house->houseSemaphore));
+
         //printf("sufficient %s", hunter->name);
         sem_post(&(hunter->collect->semaphore));
         return C_TRUE; // pretty sure this is 1
     } else{
+        sem_wait(&(hunter->house->houseSemaphore));
         l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+        sem_post(&(hunter->house->houseSemaphore));
+        
         sem_post(&(hunter->collect->semaphore));
         return C_FALSE;
         // REMEMBER TO FIND RESULTING GHOST CLASS

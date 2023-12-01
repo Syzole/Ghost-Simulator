@@ -84,6 +84,7 @@ struct Hunter {
     EvidenceList* collect;
     int fear;
     int boredom;
+    House* house;
 };
 
 struct Ghost {
@@ -100,6 +101,7 @@ struct House {
     RoomList rooms;
     Ghost ghost;
     EvidenceList foundEvidence;
+    sem_t houseSemaphore;
 };
 
 // Helper function declarations
