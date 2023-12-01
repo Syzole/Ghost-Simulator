@@ -18,6 +18,7 @@ void initRoomList(RoomList* roomList){
         initialized through function calls.
 */
 void initHouse(House* house) {
+    sem_init(&(house->houseSemaphore), 0, 1);
     initRoomList(&((house)->rooms));
     initEvidenceList(&((house)->foundEvidence));
     

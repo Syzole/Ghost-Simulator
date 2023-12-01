@@ -94,6 +94,7 @@ struct Ghost {
 
 
 struct House {
+    sem_t houseSemaphore;
     Hunter huntersInHouse[NUM_HUNTERS];
     RoomList rooms;
     Ghost ghost;

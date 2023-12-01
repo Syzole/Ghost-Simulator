@@ -50,6 +50,7 @@ void* ghost_thread(void* arg){
     int shouldContinue = 1;
 
     while(C_TRUE){
+        sem_wait(&ghost->roomIn->semaphore);
         usleep(GHOST_WAIT);
         if(ghost->roomIn->numHuntersInRoom > 0){
             ghost->boredom = 0;
@@ -73,9 +74,13 @@ void* ghost_thread(void* arg){
                     shouldContinue = moveGhost(ghost, selectRoom);
                     break;
                 default:
-                    // what case would this happen in?
+                    //empty case
                     break;
             }
+        }
+        sem_post(&ghost->roomIn->semaphore);
+        if(ghost->boredom == BOREDOM_MAX){
+            pthread_exit(NULL);
         }
     }
 }
@@ -86,8 +91,8 @@ void* hunter_thread(void* arg){
     int winCondition = 0;
 
     while(C_TRUE){ //y?
+        sem_wait(&hunter->roomIn->semaphore);
         usleep(HUNTER_WAIT);
-        
         checkIfSameRoom(hunter);
         while(shouldContinue){
             int choice = randInt(0, NUM_HUNTER_CHOICES);
@@ -106,14 +111,13 @@ void* hunter_thread(void* arg){
                     winCondition = evReview(hunter);
                     shouldContinue = 0;
                     break;
-                case 3:
-                    if(hunter->boredom == BOREDOM_MAX || hunter->fear == FEAR_MAX || winCondition == 1){
-                        pthread_exit(NULL);
-                    }
-                    break;
                 default:
                     break;
             }
+        }
+        sem_post(&hunter->roomIn->semaphore);
+        if(hunter->boredom == BOREDOM_MAX || hunter->fear == FEAR_MAX || winCondition == 1){
+             pthread_exit(NULL);
         }
     }
 }
