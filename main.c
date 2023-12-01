@@ -16,13 +16,17 @@ int main()
 
     pthread_t g, h1, h2, h3, h4;
 
-    /*
-    pthread_create();
-    pthread_create();
-    pthread_create();
-    pthread_create();
-    pthread_create();
-    */
+    pthread_create(&g, NULL, ghost_thread, NULL);
+    pthread_create(&h1, NULL, hunter_thread, NULL);
+    pthread_create(&h2, NULL, hunter_thread, NULL);
+    pthread_create(&h3, NULL, hunter_thread, NULL);
+    pthread_create(&h4, NULL, hunter_thread, NULL);
+
+    pthread_join(g, NULL);
+    pthread_join(h1, NULL);
+    pthread_join(h2, NULL);
+    pthread_join(h3, NULL);
+    pthread_join(h4, NULL);
 
     return 0;
 }
@@ -80,6 +84,7 @@ void* ghost_thread(void* arg){
         }
         sem_post(&ghost->roomIn->semaphore);
         if(ghost->boredom == BOREDOM_MAX){
+            l_ghostExit(LOG_BORED);
             pthread_exit(NULL);
         }
     }
@@ -117,7 +122,14 @@ void* hunter_thread(void* arg){
         }
         sem_post(&hunter->roomIn->semaphore);
         if(hunter->boredom == BOREDOM_MAX || hunter->fear == FEAR_MAX || winCondition == 1){
-             pthread_exit(NULL);
+            if(hunter->boredom == BOREDOM_MAX){
+                l_hunterExit(hunter->name, LOG_BORED);
+            } else if(hunter->fear == FEAR_MAX){
+                l_hunterExit(hunter->name, LOG_FEAR);
+            } else{
+                l_hunterExit(hunter->name, LOG_EVIDENCE);
+            }
+             pthread_exit(NULL); // add outcome
         }
     }
 }
