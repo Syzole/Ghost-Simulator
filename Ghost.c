@@ -41,12 +41,14 @@ int moveGhost(Ghost* ghost, Room* room){
 
     if (ghost->roomIn != NULL) {
         ghost->roomIn->ghostInRoom = NULL;
+        sem_post(&ghost->roomIn->semaphore);
     }
-
+    sem_wait(&(room->semaphore));
     room->ghostInRoom = ghost;
     ghost->roomIn = room;
     //did ghost stay in his place, no so return false
     l_ghostMove(room->name);
+    sem_post(&(room->semaphore));
     return C_FALSE;
 }
 
