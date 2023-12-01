@@ -14,6 +14,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
 }
 
 void initEvidenceList(EvidenceList* evidenceList){
+    sem_init(&(evidenceList->semaphore), 0, 1);
     evidenceList->head = NULL;
     evidenceList->tail = NULL;
 }
@@ -66,7 +67,8 @@ void checkForEv(Hunter* hunter) {
         previousEvidence = currentEvidence;
         currentEvidence = currentEvidence->next;
     }
-    l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+    // failed evidence collection
+    l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name);
     
 }
 
@@ -89,8 +91,9 @@ int evReview(Hunter* hunter){
         prevEv = NULL;
     }
 
-    if(unique > 2){
+    if(unique > 3){ //
         l_hunterReview(hunter->name, LOG_SUFFICIENT);
+        //printf("sufficient %s", hunter->name);
         return C_TRUE; // pretty sure this is 1
     } else{
         l_hunterReview(hunter->name, LOG_INSUFFICIENT);

@@ -58,7 +58,7 @@ void dropEvidence(Ghost* ghost){
     int randomIndex = randInt(0, 3);
 
     EvidenceType addedEv = ghost->allowedEvidence[randomIndex];
-    
+    //printf("The addev is %d", addedEv);
     addEvidenceToEvidenceList(&(ghost->roomIn->ev), addedEv);
 
     l_ghostEvidence(addedEv, ghost->roomIn->name);

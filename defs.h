@@ -10,13 +10,13 @@
 // Constants
 #define MAX_STR         64
 #define MAX_RUNS        50
-#define BOREDOM_MAX     100
+#define BOREDOM_MAX     1000
 #define C_TRUE          1
 #define C_FALSE         0
 #define HUNTER_WAIT     40000
 #define GHOST_WAIT      10000
 #define NUM_HUNTERS     4
-#define FEAR_MAX        10
+#define FEAR_MAX        1
 #define LOGGING         C_TRUE
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
@@ -52,6 +52,7 @@ struct EvidenceNode {
 struct EvidenceList {
     EvidenceNode* head;
     EvidenceNode* tail;
+    sem_t semaphore;
 };
 
 struct RoomNode {
@@ -94,7 +95,6 @@ struct Ghost {
 
 
 struct House {
-    sem_t houseSemaphore;
     Hunter huntersInHouse[NUM_HUNTERS];
     RoomList rooms;
     Ghost ghost;
