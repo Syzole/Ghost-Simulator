@@ -141,6 +141,7 @@ void* hunter_thread(void* arg){
             } else{
                 l_hunterExit(hunter->name, LOG_EVIDENCE);
             }
+            leaveHouse(hunter);
             pthread_exit(NULL);
         }
     }

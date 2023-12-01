@@ -16,7 +16,7 @@
 #define HUNTER_WAIT     5000
 #define GHOST_WAIT      600
 #define NUM_HUNTERS     4
-#define FEAR_MAX        1000
+#define FEAR_MAX        2
 #define LOGGING         C_TRUE
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
@@ -134,6 +134,7 @@ void initEvidenceList(EvidenceList* evidenceList);
 void moveToNewRoom(Hunter* hunter, Room* newRoom);
 void checkForEv(Hunter* hunter);
 int evReview(Hunter* hunter);
+void leaveHouse(Hunter* hunter);
 
 // Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);

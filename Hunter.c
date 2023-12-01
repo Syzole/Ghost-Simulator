@@ -143,3 +143,11 @@ int evReview(Hunter* hunter){
     }
 
 }
+
+void leaveHouse(Hunter* hunter){
+    if (hunter->roomIn != NULL) {
+        hunter->roomIn->numHuntersInRoom--;
+        hunter->roomIn->huntersInRoom[hunter->id] = NULL;
+        hunter->roomIn = NULL;
+    }
+}
