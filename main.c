@@ -55,6 +55,7 @@ void* ghost_thread(void* arg){
 
     while(C_TRUE){
         sem_wait(&ghost->roomIn->semaphore);
+        shouldContinue = 1;
         usleep(GHOST_WAIT);
         if(ghost->roomIn->numHuntersInRoom > 0){
             ghost->boredom = 0;
@@ -97,6 +98,7 @@ void* hunter_thread(void* arg){
 
     while(C_TRUE){ //y?
         sem_wait(&hunter->roomIn->semaphore);
+        shouldContinue = 1;
         usleep(HUNTER_WAIT);
         checkIfSameRoom(hunter);
         while(shouldContinue){

@@ -13,8 +13,8 @@
 #define BOREDOM_MAX     100
 #define C_TRUE          1
 #define C_FALSE         0
-#define HUNTER_WAIT     50000
-#define GHOST_WAIT      6000
+#define HUNTER_WAIT     40000
+#define GHOST_WAIT      10000
 #define NUM_HUNTERS     4
 #define FEAR_MAX        10
 #define LOGGING         C_TRUE

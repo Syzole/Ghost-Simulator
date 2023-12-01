@@ -46,6 +46,7 @@ int moveGhost(Ghost* ghost, Room* room){
     room->ghostInRoom = ghost;
     ghost->roomIn = room;
     //did ghost stay in his place, no so return false
+    l_ghostMove(room->name);
     return C_FALSE;
 }
 
