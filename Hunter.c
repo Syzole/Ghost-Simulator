@@ -21,6 +21,7 @@ void initEvidenceList(EvidenceList* evidenceList){
 
 
 void moveToNewRoom(Hunter* hunter, Room* newRoom) {
+    
     if (hunter->roomIn != NULL) {
         hunter->roomIn->numHuntersInRoom--;
         hunter->roomIn->huntersInRoom[hunter->id] = NULL;
@@ -30,15 +31,18 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
     newRoom->numHuntersInRoom++;
+    sem_wait(&(hunter->collect->semaphore));
     l_hunterMove(hunter->name, newRoom->name);
     sem_post(&newRoom->semaphore);
+
+    sem_post(&(hunter->collect->semaphore));
 }
 
 void checkForEv(Hunter* hunter) {
     //start at head
     EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
     EvidenceNode* previousEvidence = NULL;
-
+    sem_wait(&(hunter->collect->semaphore));
     while (currentEvidence != NULL) {
         //if evidence matches
         if (hunter->canRead == currentEvidence->evType) {
@@ -63,7 +67,7 @@ void checkForEv(Hunter* hunter) {
 
             // free the mem
             free(currentEvidence);
-
+            sem_post(&(hunter->collect->semaphore));
             return;
         }
         //go next
@@ -72,6 +76,7 @@ void checkForEv(Hunter* hunter) {
     }
     // failed evidence collection
     l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name);
+    sem_post(&(hunter->collect->semaphore));
     
 }
 
@@ -81,6 +86,7 @@ int evReview(Hunter* hunter){
     int unique = 0;
     int uniqueEvs[ALLOWED_EVIDENCE];
     //go through the hunters' evidence list until the end (NULL), checking for 3 unique types of evidence
+    sem_wait(&(hunter->collect->semaphore));
     for(int i = 0; i < EVIDENCE_TYPES; i++){
         while(currEv != NULL){
             if(currEv->evType == (enum EvidenceType)i){
@@ -97,9 +103,11 @@ int evReview(Hunter* hunter){
     if(unique > 3){ //
         l_hunterReview(hunter->name, LOG_SUFFICIENT);
         //printf("sufficient %s", hunter->name);
+        sem_post(&(hunter->collect->semaphore));
         return C_TRUE; // pretty sure this is 1
     } else{
         l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+        sem_post(&(hunter->collect->semaphore));
         return C_FALSE;
         // REMEMBER TO FIND RESULTING GHOST CLASS
     }

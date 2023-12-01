@@ -13,16 +13,16 @@ int main()
     populateRooms(&house);
 
     startHunt(&house, &(house.ghost));
-
+  
     pthread_t g, h1, h2, h3, h4;
 
-    pthread_create(&g, NULL, ghost_thread, &(house.ghost));
+    // pthread_create(&g, NULL, ghost_thread, &(house.ghost));
     pthread_create(&h1, NULL, hunter_thread, &(house.huntersInHouse[0]));
     pthread_create(&h2, NULL, hunter_thread, &(house.huntersInHouse[1]));
     pthread_create(&h3, NULL, hunter_thread, &(house.huntersInHouse[2]));
     pthread_create(&h4, NULL, hunter_thread, &(house.huntersInHouse[3]));
 
-    pthread_join(g, NULL);
+    // pthread_join(g, NULL);
     pthread_join(h1, NULL);
     pthread_join(h2, NULL);
     pthread_join(h3, NULL);
@@ -54,7 +54,7 @@ void* ghost_thread(void* arg){
     int shouldContinue = 1;
 
     while(C_TRUE){
-        
+        sem_wait(&ghost->roomIn->semaphore);
         shouldContinue = 1;
         usleep(GHOST_WAIT);
         if(ghost->roomIn->numHuntersInRoom > 0){
@@ -63,7 +63,6 @@ void* ghost_thread(void* arg){
             ghost->boredom++;
         }
         while(shouldContinue){
-            sem_wait(&ghost->roomIn->semaphore);
             int choice = randInt(0, NUM_GHOST_CHOICES);
             switch(choice){
                 case 0:
@@ -83,8 +82,9 @@ void* ghost_thread(void* arg){
                     //empty case
                     break;
             }
-            sem_post(&ghost->roomIn->semaphore);
+            
         }
+        sem_post(&ghost->roomIn->semaphore);
         if(ghost->boredom == BOREDOM_MAX){
             l_ghostExit(LOG_BORED);
             pthread_exit(NULL);
@@ -97,13 +97,14 @@ void* hunter_thread(void* arg){
     int shouldContinue = 1;
     int winCondition = 0;
 
-    while(C_TRUE){ //y?
-        
+    while(C_TRUE){
+        sem_wait(&hunter->roomIn->semaphore);
+
         shouldContinue = 1;
         usleep(HUNTER_WAIT);
         checkIfSameRoom(hunter);
+
         while(shouldContinue){
-            sem_wait(&hunter->roomIn->semaphore);
             int choice = randInt(0, NUM_HUNTER_CHOICES);
             switch(choice){
                 case 0:
@@ -123,9 +124,8 @@ void* hunter_thread(void* arg){
                 default:
                     break;
             }
-            sem_post(&hunter->roomIn->semaphore);
         }
-        
+        sem_post(&hunter->roomIn->semaphore);
         if(hunter->boredom == BOREDOM_MAX || hunter->fear == FEAR_MAX || winCondition == 1){
             if(hunter->boredom == BOREDOM_MAX){
                 l_hunterExit(hunter->name, LOG_BORED);
