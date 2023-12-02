@@ -29,6 +29,7 @@ int main()
     pthread_join(h4, NULL);
 
     printResults(&house);
+    cleanupHouse(&house);
 
     return 0;
 }
