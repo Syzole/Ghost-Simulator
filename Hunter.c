@@ -1,5 +1,10 @@
 #include "defs.h"
 
+/*
+    Initializes the hunter by giving its def
+        out: ghost - the ghost whose values are being initialized.
+        in: house - the house whose semaphore is being used for the ghost.
+*/
 void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->id = numHunt;
     //Hunter Id is the number of the hunter -1
