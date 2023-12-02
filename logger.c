@@ -162,3 +162,16 @@ void printResults(House* house){
     }
 
 }
+
+void printEvidenceList(EvidenceList* evidenceList) {
+
+    EvidenceNode* current = evidenceList->head;
+
+    while (current != NULL) {
+        char evidenceTypeString[MAX_STR];
+        evidenceToString(current->evType, evidenceTypeString);
+        printf("    - %s \n", evidenceTypeString);
+        current = current->next;
+    }
+
+}
