@@ -111,12 +111,10 @@ void checkForEv(Hunter* hunter) {
 int evReview(Hunter* hunter){
     EvidenceNode* currEv = hunter->collect->head;
     int unique = 0;
-    int uniqueEvs[ALLOWED_EVIDENCE];
     //go through the hunters' evidence list until the end (NULL), checking for 3 unique types of evidence
     for(int i = 0; i < EVIDENCE_TYPES; i++){
         while(currEv != NULL){
             if(currEv->evType == (enum EvidenceType)i){
-                uniqueEvs[unique] = (enum EvidenceType)i;
                 //printf("%d", uniqueEvs[unique]);
                 unique++;
             }
