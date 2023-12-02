@@ -132,6 +132,7 @@ void initGhost(Ghost* ghost, House* house);
 int moveGhost(Ghost* ghost, Room* room);
 void doNothing();
 void dropEvidence(Ghost* ghost);
+GhostClass determineGhostType(EvidenceList* foundEvidence);
 
 // Forward declarations for functions in Hunter.c
 void initHunter(Hunter* hunter, House* house, int numHunt);
