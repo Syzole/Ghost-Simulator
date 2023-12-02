@@ -37,31 +37,6 @@ enum GhostClass randomGhost() {
     return (enum GhostClass) randInt(0, GHOST_COUNT);
 }
 
-/*
-    Returns the string representation of the given enum EvidenceType.
-        in: type - the enum EvidenceType to convert
-        out: str - the string representation of the given enum EvidenceType, minimum 16 characters
-*/
-void evidenceToString(enum EvidenceType type, char* str) {
-    switch (type) {
-        case EMF:
-            strcpy(str, "EMF");
-            break;
-        case TEMPERATURE:
-            strcpy(str, "TEMPERATURE");
-            break;
-        case FINGERPRINTS:
-            strcpy(str, "FINGERPRINTS");
-            break;
-        case SOUND:
-            strcpy(str, "SOUND");
-            break;
-        default:
-            strcpy(str, "UNKNOWN");
-            break;
-    }
-}
-
 /* 
     Returns the string representation of the given enum GhostClass.
         in: ghost - the enum GhostClass to convert
@@ -87,7 +62,38 @@ void ghostToString(enum GhostClass ghost, char* buffer) {
     }
 }
 
-//This was heavily influenced by my code that i made in A4 addGhost function
+/*
+    Returns the string representation of the given enum EvidenceType.
+        in: type - the enum EvidenceType to convert
+        out: str - the string representation of the given enum EvidenceType, minimum 16 characters
+*/
+void evidenceToString(enum EvidenceType type, char* str) {
+    switch (type) {
+        case EMF:
+            strcpy(str, "EMF");
+            break;
+        case TEMPERATURE:
+            strcpy(str, "TEMPERATURE");
+            break;
+        case FINGERPRINTS:
+            strcpy(str, "FINGERPRINTS");
+            break;
+        case SOUND:
+            strcpy(str, "SOUND");
+            break;
+        default:
+            strcpy(str, "UNKNOWN");
+            break;
+    }
+}
+
+/*  
+    Dynamically allocates an evidence node in order to place the given evidence type in the
+    next possible node in the given evidence list. This function was heavily influenced by
+    Arjun's addGhost function from Assignment 4 in this course.
+        out: evidenceList - evidence is added to the evidence list pointed to.
+        in: evidenceType - an enum that describes a type of evidence a ghost leaves.
+*/
 void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType) {
     EvidenceNode* newEvidence = (EvidenceNode*)malloc(sizeof(EvidenceNode));
 
@@ -104,6 +110,12 @@ void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidence
     }
 }
 
+/*  
+    Checks the room that the provided hunter is currently in for ghosts- if one is detected,
+    the hunter's fear is increased while their boredom is reset. If they are in a room without
+    a ghost, their boredom increases.
+        out: hunter - the hunter whose status effects are changed.
+*/
 void checkIfSameRoom(Hunter* hunter){
     if(hunter->roomIn->ghostInRoom != NULL){
         hunter->fear++;
@@ -113,6 +125,10 @@ void checkIfSameRoom(Hunter* hunter){
     }
 }
 
+/*  
+    Cleans up memory for a list of evidence nodes.
+        out: evidenceList - the evidence list that is having its nodes freed and reset.
+*/
 void cleanupEvidenceList(EvidenceList* evidenceList) {
     if (evidenceList->head == NULL) {
         return;
@@ -126,6 +142,10 @@ void cleanupEvidenceList(EvidenceList* evidenceList) {
     }
 }
 
+/*  
+    Cleans up memory for a list of room nodes and associated rooms.
+        out: roomList - a room list whose nodes are being freed and reset.
+*/
 void cleanupRoomList(RoomList* roomList) {
     RoomNode* currentRoomNode = roomList->head;
 
@@ -142,8 +162,12 @@ void cleanupRoomList(RoomList* roomList) {
     roomList->count = 0;
 }
 
-
-
+/*  
+    Cleans up memory for the entire house, including evidence lists and room
+    lists for each room. Function calls are used to accomplish this.
+        out: house - the house whose members are being freed and reset.
+*/
+// 
 void cleanupHouse(House* house) {
     cleanupEvidenceList(&(house->foundEvidence));
 

@@ -34,13 +34,13 @@ enum LoggerDetails { LOG_FEAR, LOG_BORED, LOG_EVIDENCE, LOG_SUFFICIENT, LOG_INSU
 
 
 // Forward declarations
-typedef struct Room Room;
-typedef struct Ghost Ghost;
+typedef struct EvidenceNode EvidenceNode;
 typedef struct EvidenceList EvidenceList;
 typedef struct RoomNode RoomNode;
 typedef struct RoomList RoomList;
+typedef struct Room Room;
 typedef struct Hunter Hunter;
-typedef struct EvidenceNode EvidenceNode;
+typedef struct Ghost Ghost;
 typedef struct House House;
 
 // Data structures
@@ -112,6 +112,13 @@ enum GhostClass randomGhost();
 void ghostToString(enum GhostClass, char*);
 void evidenceToString(enum EvidenceType, char*);
 
+//New helper functions
+void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType);
+void checkIfSameRoom(Hunter* hunter);
+void cleanupEvidenceList(EvidenceList* evidenceList);
+void cleanupRoomList(RoomList* roomList);
+void cleanupHouse(House* house);
+
 // Logging function declarations
 void l_hunterInit(char* name, enum EvidenceType equipment);
 void l_hunterMove(char* name, char* room);
@@ -157,9 +164,3 @@ void startHunt(House *house, Ghost* ghost);
 void* ghost_thread(void* arg);
 void* hunter_thread(void* arg);
 
-//New forward declarations for function in utils.c
-void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType);
-void checkIfSameRoom(Hunter* hunter);
-void cleanupEvidenceList(EvidenceList* evidenceList);
-void cleanupRoomList(RoomList* roomList);
-void cleanupHouse(House* house);
