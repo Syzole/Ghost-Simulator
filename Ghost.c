@@ -62,15 +62,14 @@ void initGhost(Ghost* ghost, House* house) {
         are any hunters in the room the ghost wishes to move to.
 */
 int moveGhost(Ghost* ghost, Room* room){
-    if(room->numHuntersInRoom>0){
+    if(roomHasHunters(room)){
         //is the ghost in the same place, yes so return true
         return C_TRUE;
     }
 
-    if (ghost->roomIn != NULL) {
-        ghost->roomIn->ghostInRoom = NULL;
-        sem_post(&ghost->roomIn->semaphore);
-    }
+    ghost->roomIn->ghostInRoom = NULL;
+    sem_post(&ghost->roomIn->semaphore);
+        
     sem_wait(&(room->semaphore));
     room->ghostInRoom = ghost;
     ghost->roomIn = room;
@@ -143,3 +142,19 @@ GhostClass determineGhostType(EvidenceList* foundEvidence) {
 
     return GH_UNKNOWN;
 }
+
+
+
+// Function to check if a room has hunters in it
+int roomHasHunters(Room* room) {
+  
+    // Iterate through each hunter in the room
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        if (room->huntersInRoom[i] != NULL) {
+            return C_TRUE;
+        }
+    }
+
+    return C_FALSE;
+}
+

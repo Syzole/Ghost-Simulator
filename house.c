@@ -40,7 +40,6 @@ Room* createRoom(char* name) {
 
     sem_init(&(room->semaphore), 0, 1);
 
-    room->numHuntersInRoom = 0;
     room->ghostInRoom = NULL;    
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomlist));

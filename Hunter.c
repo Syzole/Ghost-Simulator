@@ -29,15 +29,12 @@ void initEvidenceList(EvidenceList* evidenceList){
 
 void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     
-    if (hunter->roomIn != NULL) {
-        hunter->roomIn->numHuntersInRoom--;
-        hunter->roomIn->huntersInRoom[hunter->id] = NULL;
-        sem_post(&hunter->roomIn->semaphore);
-    }
+    hunter->roomIn->huntersInRoom[hunter->id] = NULL;
+    sem_post(&hunter->roomIn->semaphore);
+    
     sem_wait(&newRoom->semaphore);
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
-    newRoom->numHuntersInRoom++;
     sem_wait(hunter->houseSemaphore);
     l_hunterMove(hunter->name, newRoom->name);
     sem_post(hunter->houseSemaphore);
@@ -154,7 +151,6 @@ int evReview(Hunter* hunter){
 
 void leaveHouse(Hunter* hunter){
     if (hunter->roomIn != NULL) {
-        hunter->roomIn->numHuntersInRoom--;
         hunter->roomIn->huntersInRoom[hunter->id] = NULL;
         hunter->roomIn = NULL;
     }

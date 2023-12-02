@@ -55,7 +55,7 @@ void* ghost_thread(void* arg){
         sem_wait(&ghost->roomIn->semaphore);
         shouldContinue = 1;
         usleep(GHOST_WAIT);
-        if(ghost->roomIn->numHuntersInRoom > 0){
+        if(roomHasHunters(ghost->roomIn)){
             ghost->boredom = 0;
         } else{
             ghost->boredom++;

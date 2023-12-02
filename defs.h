@@ -73,7 +73,6 @@ struct Room {
     RoomList roomlist;
     Hunter* huntersInRoom[NUM_HUNTERS];
     sem_t semaphore;
-    int numHuntersInRoom;
 };
 
 struct Hunter {
@@ -140,6 +139,7 @@ int moveGhost(Ghost* ghost, Room* room);
 void doNothing();
 void dropEvidence(Ghost* ghost);
 GhostClass determineGhostType(EvidenceList* foundEvidence);
+int roomHasHunters(Room* room);
 
 // Forward declarations for functions in Hunter.c
 void initHunter(Hunter* hunter, House* house, int numHunt);
