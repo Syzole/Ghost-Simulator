@@ -87,12 +87,11 @@ void checkForEv(Hunter* hunter) {
                 if (currentEvidence == hunter->roomIn->ev.tail) {
                     hunter->roomIn->ev.tail = previousEvidence;
                 }
-            }
 
-            // free the mem
-            free(currentEvidence);
-            
-            return;
+                // free the mem
+                free(currentEvidence);
+                return;
+            }
         }
         //go next
         previousEvidence = currentEvidence;
