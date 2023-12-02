@@ -87,6 +87,7 @@ void ghostToString(enum GhostClass ghost, char* buffer) {
     }
 }
 
+//This was heavily influenced by my code that i made in A4 addGhost function
 void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType) {
     EvidenceNode* newEvidence = (EvidenceNode*)malloc(sizeof(EvidenceNode));
 
@@ -110,4 +111,35 @@ void checkIfSameRoom(Hunter* hunter){
     } else{
         hunter->boredom++;
     }
+}
+
+void cleanupEvidenceList(EvidenceList* evidenceList) {
+    EvidenceNode* currentEvidence = evidenceList->head;
+    while (currentEvidence != NULL) {
+        EvidenceNode* nextEvidence = currentEvidence->next;
+        free(currentEvidence);
+        currentEvidence = nextEvidence;
+    }
+}
+
+void cleanupRoomList(RoomList* roomList) {
+    RoomNode* currentRoomNode = roomList->head;
+    while (currentRoomNode != NULL) {
+        RoomNode* nextRoomNode = currentRoomNode->next;
+        free(currentRoomNode->data);
+        free(currentRoomNode);
+        currentRoomNode = nextRoomNode;
+    }
+}
+
+void cleanupHouse(House* house) {
+    cleanupEvidenceList(&(house->foundEvidence));
+
+    // Cleanup individual hunters
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        cleanupEvidenceList(house->huntersInHouse[i].collect);
+    }
+
+    // Cleanup rooms in the house
+    cleanupRoomList(&(house->rooms));
 }
