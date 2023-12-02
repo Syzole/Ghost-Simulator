@@ -65,7 +65,9 @@ void dropEvidence(Ghost* ghost){
 
     EvidenceType addedEv = ghost->allowedEvidence[randomIndex];
     //printf("The addev is %d", addedEv);
+    sem_wait(&(ghost->roomIn->ev.semaphore));
     addEvidenceToEvidenceList(&(ghost->roomIn->ev), addedEv);
+    sem_post(&(ghost->roomIn->ev.semaphore));
 
     sem_wait(ghost->houseSemaphore);
     l_ghostEvidence(addedEv, ghost->roomIn->name);

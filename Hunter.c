@@ -64,16 +64,18 @@ void checkForEv(Hunter* hunter) {
     EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
     EvidenceNode* previousEvidence = NULL;
     while (currentEvidence != NULL) {
-        //if evidence matches
+        //if evidence matches hunter's type
         if (hunter->canRead == currentEvidence->evType) {
             EvidenceType collectedEvidence = hunter->canRead;
 
             if(isUnique(hunter->collect, collectedEvidence)){
+                sem_wait(&(hunter->roomIn->ev.semaphore));
                 addEvidenceToEvidenceList(hunter->collect, collectedEvidence);
 
                 sem_wait(hunter->houseSemaphore);
                 l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
                 sem_post(hunter->houseSemaphore);
+
 
                 // edge case if removed at head
                 if (previousEvidence != NULL) {
@@ -90,6 +92,7 @@ void checkForEv(Hunter* hunter) {
 
                 // free the mem
                 free(currentEvidence);
+                sem_post(&(hunter->roomIn->ev.semaphore));
                 return;
             }
         }

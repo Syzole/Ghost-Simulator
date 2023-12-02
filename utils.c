@@ -113,33 +113,59 @@ void checkIfSameRoom(Hunter* hunter){
     }
 }
 
+// Cleanup a list of evidence nodes
 void cleanupEvidenceList(EvidenceList* evidenceList) {
+    if (evidenceList->head == NULL) {
+        return;
+    }
     EvidenceNode* currentEvidence = evidenceList->head;
+    
     while (currentEvidence != NULL) {
         EvidenceNode* nextEvidence = currentEvidence->next;
-        free(currentEvidence);
+        free(currentEvidence);  // Free the evidence node
         currentEvidence = nextEvidence;
     }
 }
 
+// Cleanup a list of room nodes and associated rooms
+// Cleanup a list of room nodes and associated rooms
 void cleanupRoomList(RoomList* roomList) {
     RoomNode* currentRoomNode = roomList->head;
+
     while (currentRoomNode != NULL) {
         RoomNode* nextRoomNode = currentRoomNode->next;
-        free(currentRoomNode->data);
-        free(currentRoomNode);
+
+        free(currentRoomNode); // Free the node itself
+
         currentRoomNode = nextRoomNode;
     }
+
+    // Reset head, tail, and count after cleanup
+    roomList->head = roomList->tail = NULL;
+    roomList->count = 0;
 }
 
+
+// Cleanup the entire house, including evidence lists for each room
 void cleanupHouse(House* house) {
     cleanupEvidenceList(&(house->foundEvidence));
 
-    // Cleanup individual hunters
-    for (int i = 0; i < NUM_HUNTERS; ++i) {
-        cleanupEvidenceList(house->huntersInHouse[i].collect);
+    RoomNode* currentRoomNode = house->rooms.head;
+
+    while (currentRoomNode != NULL) {
+        RoomNode* nextRoomNode = currentRoomNode->next;
+
+        // Cleanup the evidence list for the current room
+        cleanupEvidenceList(&(currentRoomNode->data->ev));
+        cleanupRoomList(&(currentRoomNode->data->roomlist));
+        free(currentRoomNode->data);  // Free the room associated with the node
+        free(currentRoomNode);        // Free the node itself
+
+        currentRoomNode = nextRoomNode;
     }
 
-    // Cleanup rooms in the house
-    cleanupRoomList(&(house->rooms));
+    // Reset head, tail, and count after cleanup
+    house->rooms.head = house->rooms.tail = NULL;
+    house->rooms.count = 0;
 }
+

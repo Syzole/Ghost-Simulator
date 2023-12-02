@@ -32,6 +32,8 @@ gcc -g -o test defs.h Ghost.c house.c logger.c main.c utils.c Hunter.c -lpthread
 valgrind --leak-check=full ./test
 gcc -g -o test defs.h Ghost.c house.c logger.c main.c utils.c Hunter.c -lpthread -fsanitize=address
 
+gcc -g -Wall -Wextra -o final ${FILES} -lpthread -fsanitize=thread
+
 
 Swapping Devices: Two hunters can swap devices if they are in the same room.
 Make sure to include semaphore locking so that no two hunters have the same device at a time outside
