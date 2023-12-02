@@ -28,6 +28,10 @@ and then print everything at the end saying all the stuff like hunters win yay o
 This is the command line for testing and debuggin:
 gcc -g -o test defs.h Ghost.c house.c logger.c main.c utils.c Hunter.c -lpthread
 
+gcc -g -o test defs.h Ghost.c house.c logger.c main.c utils.c Hunter.c -lpthread
+valgrind --leak-check=full ./test
+gcc -g -o test defs.h Ghost.c house.c logger.c main.c utils.c Hunter.c -lpthread -fsanitize=address
+
 
 Swapping Devices: Two hunters can swap devices if they are in the same room.
 Make sure to include semaphore locking so that no two hunters have the same device at a time outside
