@@ -73,12 +73,10 @@ void* ghost_thread(void* arg){
                     shouldContinue = 0;
                     break;
                 case 1:
-                //maybe shift sems to insde drop ev
                     dropEvidence(ghost);
                     shouldContinue = 0;
                     break;
                 case 2:
-                //maybe shift sems to insde should continue
                     Room* selectRoom;
                     selectRoom = selectRandomRoom(&(ghost->roomIn->roomlist));
                     shouldContinue = moveGhost(ghost, selectRoom);
