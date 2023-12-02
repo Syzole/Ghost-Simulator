@@ -123,6 +123,10 @@ void l_ghostMove(char* room);
 void l_ghostEvidence(enum EvidenceType evidence, char* room);
 void l_ghostExit(enum LoggerDetails reason);
 
+// New forward declarations for functions in logger.c
+void printResults(House* house);
+void printEvidenceList(EvidenceList* evidenceList);
+
 // Forward declarations for functions in Ghost.c
 void initGhost(Ghost* ghost, House* house);
 int moveGhost(Ghost* ghost, Room* room);

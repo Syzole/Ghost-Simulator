@@ -136,18 +136,25 @@ void l_ghostInit(enum GhostClass ghost, char* room) {
 void printResults(House* house){
     int result = 0;
     printf("----------------------------\nSimulation complete. The results are as follows.\n----------------------------\n");
+    
     for(int i = 0; i < NUM_HUNTERS; i++){
         if(house->huntersInHouse[i].winCondition == 1){
             result = 1;
         }
     }
-    // print evidence function here
+
+    printEvidenceList(house->foundEvidence);
+
     if(result == 1){
-            printf("The hunters win! They collected enough evidence to identify the ghost.\n");
+        printf("The hunters win! They collected enough evidence to identify the ghost.\n");
+        switch(){
             
-        } else{
-            printf("The ghost wins as the hunters did not collect.\n");
         }
+        
+    } else{
+        printf("The ghost wins as the hunters did not collect.\n");
+    }
+    
     printf("Hunters who ran away in fear:\n");
     for(int i = 0; i < NUM_HUNTERS; i++){
         if(house->huntersInHouse[i].fear >= FEAR_MAX){
@@ -166,6 +173,7 @@ void printResults(House* house){
 void printEvidenceList(EvidenceList* evidenceList) {
 
     EvidenceNode* current = evidenceList->head;
+    printf("Evidence found:\n");
 
     while (current != NULL) {
         char evidenceTypeString[MAX_STR];
