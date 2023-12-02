@@ -17,6 +17,9 @@ Program Description:
 - Hunters win if at least one of the hunters has identified the ghost with the evidence they have
 - Ghost wins if they have not found enough evidence to identify the ghost
 
+Note: The use of the house semaphore was used to make sure that the entities took turns making logging statements, so they do not interupt each other
+
+
 List of files:	
 
 ● Ghost.c: initGhost(), moveGhost(), doNothing(), dropEvidence(), determineGhostType()
