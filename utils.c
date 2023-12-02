@@ -113,7 +113,6 @@ void checkIfSameRoom(Hunter* hunter){
     }
 }
 
-// Cleanup a list of evidence nodes
 void cleanupEvidenceList(EvidenceList* evidenceList) {
     if (evidenceList->head == NULL) {
         return;
@@ -127,8 +126,6 @@ void cleanupEvidenceList(EvidenceList* evidenceList) {
     }
 }
 
-// Cleanup a list of room nodes and associated rooms
-// Cleanup a list of room nodes and associated rooms
 void cleanupRoomList(RoomList* roomList) {
     RoomNode* currentRoomNode = roomList->head;
 
@@ -146,7 +143,7 @@ void cleanupRoomList(RoomList* roomList) {
 }
 
 
-// Cleanup the entire house, including evidence lists for each room
+
 void cleanupHouse(House* house) {
     cleanupEvidenceList(&(house->foundEvidence));
 
@@ -155,16 +152,14 @@ void cleanupHouse(House* house) {
     while (currentRoomNode != NULL) {
         RoomNode* nextRoomNode = currentRoomNode->next;
 
-        // Cleanup the evidence list for the current room
         cleanupEvidenceList(&(currentRoomNode->data->ev));
         cleanupRoomList(&(currentRoomNode->data->roomlist));
-        free(currentRoomNode->data);  // Free the room associated with the node
-        free(currentRoomNode);        // Free the node itself
+        free(currentRoomNode->data);
+        free(currentRoomNode);        
 
         currentRoomNode = nextRoomNode;
     }
 
-    // Reset head, tail, and count after cleanup
     house->rooms.head = house->rooms.tail = NULL;
     house->rooms.count = 0;
 }
