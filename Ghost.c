@@ -71,3 +71,28 @@ void dropEvidence(Ghost* ghost){
     l_ghostEvidence(addedEv, ghost->roomIn->name);
     sem_post(ghost->houseSemaphore);
 }
+
+GhostClass determineGhostType(EvidenceList* foundEvidence) {
+    int evidenceCounts[4] = {0,0,0,0}; 
+    
+    EvidenceNode* currentEvidence = foundEvidence->head;
+    while (currentEvidence != NULL) {
+        evidenceCounts[currentEvidence->evType]++;
+        currentEvidence = currentEvidence->next;
+    }
+
+    if (evidenceCounts[EMF] && evidenceCounts[TEMPERATURE] && evidenceCounts[FINGERPRINTS]) {
+        return POLTERGEIST;
+    } 
+    else if (evidenceCounts[EMF] && evidenceCounts[TEMPERATURE] && evidenceCounts[SOUND]) {
+        return BANSHEE;
+    } 
+    else if (evidenceCounts[EMF] && evidenceCounts[FINGERPRINTS] && evidenceCounts[SOUND]) {
+        return BULLIES;
+    } 
+    else if (evidenceCounts[TEMPERATURE] && evidenceCounts[FINGERPRINTS] && evidenceCounts[SOUND]) {
+        return PHANTOM;
+    }
+
+    return GH_UNKNOWN;
+}
