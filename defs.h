@@ -160,7 +160,7 @@ void addEvidenceToRoom(Room* room, EvidenceType evidence);
 Room* selectRandomRoom(RoomList* roomlist);
 
 // Forward declarations for functions in main.c
-void startHunt(House *house, Ghost* ghost);
+void startHunt(House *house);
 void* ghost_thread(void* arg);
 void* hunter_thread(void* arg);
 

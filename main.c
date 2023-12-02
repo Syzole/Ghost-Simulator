@@ -12,7 +12,7 @@ int main()
     initHouse(&house); // REMEMBER TO EDIT COMMENTS WHEN NEW FEATURES ARE ADDED TO FUNCTIONS
     populateRooms(&house);
 
-    startHunt(&house, &(house.ghost));
+    startHunt(&house);
   
     pthread_t g, h1, h2, h3, h4;
 
@@ -34,9 +34,9 @@ int main()
     return 0;
 }
 
-void startHunt(House *house, Ghost* ghost){
+void startHunt(House *house){
     //set ghost in random room, not in van
-    initGhost(ghost, house);
+    initGhost(&(house->ghost), house);
 
     //then add hunters to the van
     for (int i = 0; i < NUM_HUNTERS; ++i) {
