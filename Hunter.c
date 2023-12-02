@@ -100,7 +100,7 @@ void checkForEv(Hunter* hunter) {
     // failed evidence collection
     //printf("failed evidence collection\n");
     sem_wait(hunter->houseSemaphore);
-    l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name);
+    //l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name); ew no
     sem_post(hunter->houseSemaphore);
     
 }
