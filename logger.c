@@ -135,7 +135,7 @@ void l_ghostInit(enum GhostClass ghost, char* room) {
 
 void printResults(House* house){
     int result = 0;
-    printf("----------------------------\nSimulation complete. The results are as follows.\n----------------------------\n");
+    printf("----------------------------\nSimulation complete.\nThe results are as follows.\n----------------------------\n");
     
     for(int i = 0; i < NUM_HUNTERS; i++){
         if(house->huntersInHouse[i].winCondition == 1){
@@ -147,14 +147,14 @@ void printResults(House* house){
 
     if(result == 1){
         
-        printf("The hunters win! They collected enough evidence to identify the ghost.\n");
+        printf("\nThe hunters win!\nThey collected enough evidence to identify the ghost.\n");
 
         char identifiedGhostStr[MAX_STR];
         ghostToString(house->ghost.ghostType, identifiedGhostStr);
         printf("Identified Ghost Type: %s\n", identifiedGhostStr);
         
     } else{
-        printf("The ghost wins as the hunters did not collect.\n");
+        printf("\nThe ghost wins as the hunters did not collect enough evidence.\n");
     }
     
     printf("Hunters who ran away in fear:\n");
