@@ -20,13 +20,23 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     l_hunterInit(hunter->name,hunter->canRead);
 }
 
+/*
+    Initializes the EvidenceList structure by giving its members default values
+    and giving it a semaphore so only one thread can access lists of its type at a time.
+        out: evidenceList - the list of evidence that is being initialized.
+*/
 void initEvidenceList(EvidenceList* evidenceList){
     sem_init(&(evidenceList->semaphore), 0, 1);
     evidenceList->head = NULL;
     evidenceList->tail = NULL;
 }
 
-
+/*
+    Removes the given hunter from its current room, unlocking it, and moves the
+    hunter to the given room, locking that one. It also logs this movement.
+        in/out: hunter - the hunter who being given a pointer to the new room.
+        in/out: newRoom - the room that is being given a pointer to the hunter.
+*/
 void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     
     hunter->roomIn->huntersInRoom[hunter->id] = NULL;
@@ -44,6 +54,13 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     
 }
 
+/*
+    Checks whether or not a given piece of evidence is of a unique type compared
+    to the others in the given evidence list. 
+        in: evidenceList - a pointer to the evidence list being iterated through.
+        in: house - the type of evidence that is being looked for.
+        returns: true or false depending on whether the given evidence is unique.
+*/
 int isUnique(EvidenceList* evidenceList, EvidenceType evidenceType){ // might cause segfault
     EvidenceNode* currHEv = evidenceList->head;
     // returns false if the evidence type is found in hunters' shared evidence
@@ -59,6 +76,13 @@ int isUnique(EvidenceList* evidenceList, EvidenceType evidenceType){ // might ca
     return C_TRUE;
 }
 
+/*
+    Looks for evidence in a room that matches the given hunter's equipment. If this
+    is found, it uses other functions to check if the evidence is a unique type
+    compared to others in the shared evidence list. Then, it locks the room's evidence
+    list, takes the evidence from the room to the hunter's shared list, and unlocks the list.
+        in/out: hunter - uses the hunter's members and modifies them to try to add evidence to their evidence list.
+*/
 void checkForEv(Hunter* hunter) {
     //start at head
     EvidenceNode* currentEvidence = hunter->roomIn->ev.head;
@@ -108,6 +132,13 @@ void checkForEv(Hunter* hunter) {
     
 }
 
+/*
+    Checks if there are three pieces of evidence in the hunters' evidence list and
+    logs this.
+        in: hunter - the hunter whose evidence list is being iterated through.
+        returns: true or false depending on whether there is enough evidence to
+        identify the ghost.
+*/
 int evReview(Hunter* hunter){
     EvidenceNode* currEv = hunter->collect->head;
     int unique = 0;
@@ -142,6 +173,12 @@ int evReview(Hunter* hunter){
 
 }
 
+/*
+    Removes the hunter's prescence from the room it's currently in and removes
+    the room from the hunter's members- this is used elsewhere in order to ensure
+    the hunter successfully leaves the house without leaving a trace behind.
+        in/out: hunter - the hunter who is leaving the house.
+*/
 void leaveHouse(Hunter* hunter){
     if (hunter->roomIn != NULL) {
         hunter->roomIn->huntersInRoom[hunter->id] = NULL;
