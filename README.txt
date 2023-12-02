@@ -29,8 +29,8 @@ List of files:
 
 ● logger.c: l_hunterInit(), l_hunterMove(), l_hunterExit(), l_hunterReview(), l_hunterCollect(), l_ghostMove(), l_ghostExit(), l_ghostEvidience(), l_ghostInit, printresults(), printEvidinceList()
 
-● main.c
+● main.c: main(), startHunt(), ghost_thread(), hunter_thread()
 
-● makefile
+● makefile: This file is used to compile the executable, instructions can be found below in Compile instructions
 
-● utils.c
+● utils.c:  randInt(), randFloat(), randomGhost(), ghostToString(), evidenceToString(), addEvidenceToEvidenceList(), checkIfSameRoom(), cleanupEvidenceList(), cleanupRoomList(), cleanupHouse()
