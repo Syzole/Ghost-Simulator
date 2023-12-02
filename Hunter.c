@@ -46,14 +46,12 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
 
 int isUnique(EvidenceList* evidenceList, EvidenceType evidenceType){ // might cause segfault
     EvidenceNode* currHEv = evidenceList->head;
-    EvidenceNode* prevHEv = NULL;
     // returns false if the evidence type is found in hunters' shared evidence
     while(currHEv != NULL){
         if(currHEv->evType == evidenceType){
             //printf("not unique %d", evidenceType);
             return C_FALSE;
         }
-        prevHEv = currHEv;
         currHEv = currHEv->next;
     }
     // returns true if unique
@@ -112,7 +110,6 @@ void checkForEv(Hunter* hunter) {
 
 int evReview(Hunter* hunter){
     EvidenceNode* currEv = hunter->collect->head;
-    EvidenceNode* prevEv = NULL;
     int unique = 0;
     int uniqueEvs[ALLOWED_EVIDENCE];
     //go through the hunters' evidence list until the end (NULL), checking for 3 unique types of evidence
@@ -123,11 +120,9 @@ int evReview(Hunter* hunter){
                 //printf("%d", uniqueEvs[unique]);
                 unique++;
             }
-            prevEv = currEv;
             currEv = currEv->next;
         }
         currEv = hunter->collect->head;
-        prevEv = NULL;
     }
 
     if(unique > 2){ //
