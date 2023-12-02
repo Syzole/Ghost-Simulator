@@ -18,3 +18,19 @@ Program Description:
 - Ghost wins if they have not found enough evidence to identify the ghost
 
 List of files:	
+
+● Ghost.c: initGhost(), moveGhost(), doNothing(), dropEvidence(), determineGhostType()
+
+● Hunter.c: initHunter(), initEvidenceList(), moveToNewRoom(), isUnique(), checkForEv(), evReview(), leaveHouse()
+
+● defs.h: This is the header that contains all of the constants and forward declarations for each of the files
+
+● house.c: initRoomList(), initHouse(), createRoom(), connectRooms(), addRoom(), populateRooms(), selectRandomRoom()
+
+● logger.c: l_hunterInit(), l_hunterMove(), l_hunterExit(), l_hunterReview(), l_hunterCollect(), l_ghostMove(), l_ghostExit(), l_ghostEvidience(), l_ghostInit, printresults(), printEvidinceList()
+
+● main.c
+
+● makefile
+
+● utils.c
