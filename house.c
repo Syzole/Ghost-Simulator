@@ -21,12 +21,6 @@ void initHouse(House* house) {
     initRoomList(&((house)->rooms));
     initEvidenceList(&((house)->foundEvidence));
     sem_init (&(house->houseSemaphore), 0, 1);
-    
-    //init hunters and add to house array
-    for (int i = 0; i < NUM_HUNTERS; ++i) {
-        initHunter(&(house->huntersInHouse[i]), house, i);
-    }
-    initGhost(&(house->ghost), house);
 }
 
 /*  

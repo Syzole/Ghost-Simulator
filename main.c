@@ -35,21 +35,16 @@ int main()
 }
 
 void startHunt(House *house, Ghost* ghost){
-    //first add hunters to the head
+    //set ghost in random room, not in van
+    initGhost(ghost, house);
+
+    //then add hunters to the van
     for (int i = 0; i < NUM_HUNTERS; ++i) {
-        moveToNewRoom(&(house->huntersInHouse[i]), house->rooms.head->data);
+        initHunter(&(house->huntersInHouse[i]), house, i);
+        house->huntersInHouse[i].roomIn = house->rooms.head->data;
     }
 
-    int randRoom = randInt(1,house->rooms.count);
-    RoomNode* currRoomNode = house->rooms.head;
-
-    for (int i = 0; i < randRoom; ++i) {
-        currRoomNode = currRoomNode->next;
-    }
-
-    ghost->roomIn = currRoomNode->data;
-    currRoomNode->data->ghostInRoom = ghost;
-    l_ghostInit(ghost->ghostType, ghost->roomIn->name);
+    
 }
 
 void* ghost_thread(void* arg){

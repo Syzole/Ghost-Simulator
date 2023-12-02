@@ -12,7 +12,6 @@
 void initGhost(Ghost* ghost, House* house) {
     ghost->ghostType = randomGhost();
     ghost->boredom = 0;
-    ghost->roomIn = NULL;
     ghost->houseSemaphore = &(house->houseSemaphore);
     //switch cases to check what ev the ghost can drop
     switch (ghost->ghostType) {
@@ -39,6 +38,17 @@ void initGhost(Ghost* ghost, House* house) {
         default:
             break;
     }
+
+    int randRoom = randInt(1,house->rooms.count);
+    RoomNode* currRoomNode = house->rooms.head;
+
+    for (int i = 0; i < randRoom; ++i) {
+        currRoomNode = currRoomNode->next;
+    }
+
+    ghost->roomIn = currRoomNode->data;
+    currRoomNode->data->ghostInRoom = ghost;
+    l_ghostInit(ghost->ghostType, ghost->roomIn->name);
 }
 
 /*

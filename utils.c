@@ -176,14 +176,16 @@ void cleanupHouse(House* house) {
     while (currentRoomNode != NULL) {
         RoomNode* nextRoomNode = currentRoomNode->next;
 
+        // Cleanup the evidence list for the current room
         cleanupEvidenceList(&(currentRoomNode->data->ev));
         cleanupRoomList(&(currentRoomNode->data->roomlist));
-        free(currentRoomNode->data);
-        free(currentRoomNode);        
+        free(currentRoomNode->data);  // Free the room associated with the node
+        free(currentRoomNode);        // Free the node itself
 
         currentRoomNode = nextRoomNode;
     }
 
+    // Reset head, tail, and count after cleanup
     house->rooms.head = house->rooms.tail = NULL;
     house->rooms.count = 0;
 }
