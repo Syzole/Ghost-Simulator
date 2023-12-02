@@ -159,3 +159,6 @@ void* hunter_thread(void* arg);
 //New forward declarations for function in utils.c
 void addEvidenceToEvidenceList(EvidenceList* evidenceList, EvidenceType evidenceType);
 void checkIfSameRoom(Hunter* hunter);
+void cleanupEvidenceList(EvidenceList* evidenceList);
+void cleanupRoomList(RoomList* roomList);
+void cleanupHouse(House* house);
