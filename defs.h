@@ -21,7 +21,7 @@
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
 #define NUM_GHOST_CHOICES 3
-#define NUM_HUNTER_CHOICES 4
+#define NUM_HUNTER_CHOICES 3
 
 // Enums
 typedef enum EvidenceType EvidenceType;
@@ -85,6 +85,7 @@ struct Hunter {
     int fear;
     int boredom;
     sem_t *houseSemaphore;
+    int winCondition;
 };
 
 struct Ghost {

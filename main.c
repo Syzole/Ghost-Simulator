@@ -134,11 +134,12 @@ void* hunter_thread(void* arg){
         }
         sem_post(&hunter->roomIn->semaphore);
         if(hunter->boredom >= BOREDOM_MAX || hunter->fear >= FEAR_MAX || winCondition == 1){
-            if(hunter->boredom == BOREDOM_MAX){
+            if(hunter->boredom >= BOREDOM_MAX){
                 l_hunterExit(hunter->name, LOG_BORED);
-            } else if(hunter->fear == FEAR_MAX){
+            } else if(hunter->fear >= FEAR_MAX){
                 l_hunterExit(hunter->name, LOG_FEAR);
             } else{
+                hunter->winCondition = 1;
                 l_hunterExit(hunter->name, LOG_EVIDENCE);
             }
             leaveHouse(hunter);

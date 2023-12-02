@@ -10,6 +10,7 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
     hunter->boredom = 0;
+    hunter->winCondition = 0;
     hunter->houseSemaphore = &(house->houseSemaphore);
     l_hunterInit(hunter->name,hunter->canRead);
 }
