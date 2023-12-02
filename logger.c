@@ -143,14 +143,14 @@ void printResults(House* house){
         }
     }
 
-    printEvidenceList(house->foundEvidence);
+    printEvidenceList(&(house->foundEvidence));
 
     if(result == 1){
         
         printf("The hunters win! They collected enough evidence to identify the ghost.\n");
 
         char identifiedGhostStr[MAX_STR];
-        ghostToString(house->ghost->ghostType, identifiedGhostStr);
+        ghostToString(house->ghost.ghostType, identifiedGhostStr);
         printf("Identified Ghost Type: %s\n", identifiedGhostStr);
         
     } else{

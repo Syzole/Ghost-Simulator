@@ -28,6 +28,8 @@ int main()
     pthread_join(h3, NULL);
     pthread_join(h4, NULL);
 
+    printResults(&house);
+
     return 0;
 }
 
