@@ -2,6 +2,10 @@ Authors:
 Arjun Bedi: #101267749
 Jessica Hill 101280293
 
+There are two tar files included:
+The base file (COMP2401_BEDI_ARJUN_101267749_HILL_JESSICA_101280293_FINAL.tar)
+and the bonus file (BONUS_COMP2401_BEDI_ARJUN_101267749_HILL_JESSICA_101280293_FINAL.tar).
+
 Bonuses implemented:
 -The commit png is a screen shot our commit history for the Github bonus marks
 -It writes a log of all the events to the logging.txt file
