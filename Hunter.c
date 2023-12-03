@@ -45,12 +45,10 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     sem_wait(&newRoom->semaphore);
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
+    
     sem_wait(hunter->houseSemaphore);
     l_hunterMove(hunter->name, newRoom->name);
     sem_post(hunter->houseSemaphore);
-    
-    sem_post(&newRoom->semaphore);
-
     
 }
 
