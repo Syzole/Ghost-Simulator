@@ -44,6 +44,10 @@ Room* createRoom(char* name) {
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomlist));
 
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        room->huntersInRoom[i] = NULL;
+    }
+
     return room;
 }
 
