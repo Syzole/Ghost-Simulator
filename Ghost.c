@@ -97,7 +97,7 @@ void doNothing(){
         evidence list of the room it's in.
 */
 void dropEvidence(Ghost* ghost){
-    int randomIndex = randInt(0, 3);
+    int randomIndex = randInt(0, ALLOWED_EVIDENCE);
 
     EvidenceType addedEv = ghost->allowedEvidence[randomIndex];
     
