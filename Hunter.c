@@ -93,8 +93,10 @@ void checkForEv(Hunter* hunter) {
             EvidenceType collectedEvidence = hunter->canRead;
 
             if(isUnique(hunter->collect, collectedEvidence)){
-                sem_wait(&(hunter->roomIn->ev.semaphore));
+                
+                sem_wait(&(hunter->collect->semaphore));
                 addEvidenceToEvidenceList(hunter->collect, collectedEvidence);
+                sem_post(&(hunter->collect->semaphore));
 
                 sem_wait(hunter->houseSemaphore);
                 l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
@@ -116,7 +118,7 @@ void checkForEv(Hunter* hunter) {
 
                 // free the mem
                 free(currentEvidence);
-                sem_post(&(hunter->roomIn->ev.semaphore));
+                
                 return;
             }
         }
@@ -126,9 +128,6 @@ void checkForEv(Hunter* hunter) {
     }
     // failed evidence collection
     //printf("failed evidence collection\n");
-    sem_wait(hunter->houseSemaphore);
-    //l_hunterCollect(hunter->name, EV_UNKNOWN, hunter->roomIn->name); ew no
-    sem_post(hunter->houseSemaphore);
     
 }
 

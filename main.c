@@ -138,9 +138,9 @@ void* hunter_thread(void* arg){
                     shouldContinue = 0;
                     break;
                 case 1:
-                    sem_wait(&(hunter->collect->semaphore));
+                    sem_wait(&(hunter->roomIn->ev.semaphore));
                     checkForEv(hunter);
-                    sem_post(&(hunter->collect->semaphore));
+                    sem_post(&(hunter->roomIn->ev.semaphore));
                     shouldContinue = 0;
                     break;
                 case 2:
