@@ -49,8 +49,6 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     sem_wait(hunter->houseSemaphore);
     l_hunterMove(hunter->name, newRoom->name, hunter->outfile);
     sem_post(hunter->houseSemaphore);
-    
-    sem_post(&newRoom->semaphore);
 
     
 }

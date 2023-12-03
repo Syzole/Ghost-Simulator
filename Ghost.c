@@ -79,7 +79,6 @@ int moveGhost(Ghost* ghost, Room* room){
     l_ghostMove(room->name, ghost->outfile);
     sem_post(ghost->houseSemaphore);
 
-    sem_post(&(room->semaphore));
     return C_FALSE;
 }
 

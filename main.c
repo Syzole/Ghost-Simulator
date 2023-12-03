@@ -80,7 +80,7 @@ void* ghost_thread(void* arg){
     int shouldContinue = 1;
 
     while(C_TRUE){
-        sem_wait(&ghost->roomIn->semaphore);
+
         shouldContinue = 1;
         usleep(GHOST_WAIT);
         if(roomHasHunters(ghost->roomIn)){
@@ -88,6 +88,9 @@ void* ghost_thread(void* arg){
         } else{
             ghost->boredom++;
         }
+
+        sem_wait(&ghost->roomIn->semaphore);
+        
         while(shouldContinue){
             int choice = randInt(0, NUM_GHOST_CHOICES);
             switch(choice){
@@ -135,11 +138,11 @@ void* hunter_thread(void* arg){
     int winCondition = 0;
 
     while(C_TRUE){
-        sem_wait(&hunter->roomIn->semaphore);
-
         shouldContinue = 1;
         usleep(HUNTER_WAIT);
         checkIfSameRoom(hunter);
+
+        sem_wait(&hunter->roomIn->semaphore);
 
         while(shouldContinue){
             int choice = randInt(0, NUM_HUNTER_CHOICES);
