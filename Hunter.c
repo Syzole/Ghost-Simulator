@@ -100,7 +100,7 @@ void checkForEv(Hunter* hunter) {
                 sem_post(&(hunter->collect->semaphore));
 
                 sem_wait(hunter->houseSemaphore);
-                l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name);
+                l_hunterCollect(hunter->name, collectedEvidence, hunter->roomIn->name, hunter->outfile);
                 sem_post(hunter->houseSemaphore);
 
 
@@ -156,14 +156,14 @@ int evReview(Hunter* hunter){
 
     if(unique > 2){ //
         sem_wait(hunter->houseSemaphore);
-        l_hunterReview(hunter->name, LOG_SUFFICIENT);
+        l_hunterReview(hunter->name, LOG_SUFFICIENT, hunter->outfile);
         sem_post(hunter->houseSemaphore);
 
         //printf("sufficient %s", hunter->name);
         return C_TRUE; // pretty sure this is 1
     } else{
         sem_wait(hunter->houseSemaphore);
-        l_hunterReview(hunter->name, LOG_INSUFFICIENT);
+        l_hunterReview(hunter->name, LOG_INSUFFICIENT, hunter->outfile);
         sem_post(hunter->houseSemaphore);
         
     

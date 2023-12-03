@@ -29,21 +29,26 @@ void l_hunterMove(char* hunter, char* room, FILE *outfile) {
         in: hunter - the hunter name to log
         in: reason - the reason for exiting, either LOG_FEAR, LOG_BORED, or LOG_EVIDENCE
 */
-void l_hunterExit(char* hunter, enum LoggerDetails reason) {
+void l_hunterExit(char* hunter, enum LoggerDetails reason, FILE *outfile) {
     if (!LOGGING) return;
     printf("[HUNTER EXIT] [%s] exited because ", hunter);
+    fprintf(outfile, "[HUNTER EXIT] [%s] exited because ", hunter);
     switch (reason) {
         case LOG_FEAR:
             printf("[FEAR]\n");
+            fprintf(outfile, "[FEAR]\n");
             break;
         case LOG_BORED:
             printf("[BORED]\n");
+            fprintf(outfile, "[BORED]\n");
             break;
         case LOG_EVIDENCE:
             printf("[EVIDENCE]\n");
+            fprintf(outfile, "[EVIDENCE]\n");
             break;
         default:
             printf("[UNKNOWN]\n");
+            fprintf(outfile, "[UNKNOWN]\n");
     }
 }
 
@@ -52,18 +57,22 @@ void l_hunterExit(char* hunter, enum LoggerDetails reason) {
         in: hunter - the hunter name to log
         in: result - the result of the review, either LOG_SUFFICIENT or LOG_INSUFFICIENT
 */
-void l_hunterReview(char* hunter, enum LoggerDetails result) {
+void l_hunterReview(char* hunter, enum LoggerDetails result, FILE *outfile) {
     if (!LOGGING) return;
     printf("[HUNTER REVIEW] [%s] reviewed evidence and found ", hunter);
+    fprintf(outfile, "[HUNTER REVIEW] [%s] reviewed evidence and found ", hunter);
     switch (result) {
         case LOG_SUFFICIENT:
             printf("[SUFFICIENT]\n");
+            fprintf(outfile, "[SUFFICIENT]\n");
             break;
         case LOG_INSUFFICIENT:
             printf("[INSUFFICIENT]\n");
+            fprintf(outfile, "[INSUFFICIENT]\n");
             break;
         default:
             printf("[UNKNOWN]\n");
+            fprintf(outfile, "[UNKNOWN]\n");
     }
 }
 
@@ -73,11 +82,12 @@ void l_hunterReview(char* hunter, enum LoggerDetails result) {
         in: evidence - the evidence type to log
         in: room - the room name to log
 */
-void l_hunterCollect(char* hunter, enum EvidenceType evidence, char* room) {
+void l_hunterCollect(char* hunter, enum EvidenceType evidence, char* room, FILE *outfile) {
     if (!LOGGING) return;
     char ev_str[MAX_STR];
     evidenceToString(evidence, ev_str);
     printf("[HUNTER EVIDENCE] [%s] found [%s] in [%s] and [COLLECTED]\n", hunter, ev_str, room);
+    fprintf(outfile, "[HUNTER EVIDENCE] [%s] found [%s] in [%s] and [COLLECTED]\n", hunter, ev_str, room);
 }
 
 /*
@@ -94,21 +104,26 @@ void l_ghostMove(char* room, FILE *outfile) {
     Logs the ghost exiting the house.
         in: reason - the reason for exiting, either LOG_FEAR, LOG_BORED, or LOG_EVIDENCE
 */
-void l_ghostExit(enum LoggerDetails reason) {
+void l_ghostExit(enum LoggerDetails reason, FILE *outfile) {
     if (!LOGGING) return;
     printf("[GHOST EXIT] Exited because ");
+    fprintf(outfile, "[GHOST EXIT] Exited because ");
     switch (reason) {
         case LOG_FEAR:
             printf("[FEAR]\n");
+            fprintf(outfile, "[FEAR]\n");
             break;
         case LOG_BORED:
             printf("[BORED]\n");
+            fprintf(outfile, "[BORED]\n");
             break;
         case LOG_EVIDENCE:
             printf("[EVIDENCE]\n");
+            fprintf(outfile, "[EVIDENCE]\n");
             break;
         default:
             printf("[UNKNOWN]\n");
+            fprintf(outfile, "[UNKNOWN]\n");
     }
 }
 
@@ -148,6 +163,7 @@ void l_ghostInit(enum GhostClass ghost, char* room, FILE *outfile) {
 void printResults(House* house){
     int result = 0;
     printf("----------------------------\nSimulation complete.\nThe results are as follows.\n----------------------------\n");
+    fprintf(house->outfile, "----------------------------\nSimulation complete.\nThe results are as follows.\n----------------------------\n");
     
     for(int i = 0; i < NUM_HUNTERS; i++){
         if(house->huntersInHouse[i].winCondition == 1){
@@ -155,7 +171,7 @@ void printResults(House* house){
         }
     }
 
-    printEvidenceList(&(house->foundEvidence));
+    printEvidenceList(&(house->foundEvidence), house->outfile);
 
     if(result == 1){
         
@@ -164,21 +180,27 @@ void printResults(House* house){
         char identifiedGhostStr[MAX_STR];
         ghostToString(determineGhostType(&(house->foundEvidence)), identifiedGhostStr);
         printf("Identified Ghost Type: %s\n", identifiedGhostStr);
+        fprintf(house->outfile, "Identified Ghost Type: %s\n", identifiedGhostStr);
         
     } else{
         printf("\nThe ghost wins as the hunters did not collect enough evidence.\n");
+        fprintf(house->outfile, "\nThe ghost wins as the hunters did not collect enough evidence.\n");
     }
     
     printf("Hunters who ran away in fear:\n");
+    fprintf(house->outfile, "Hunters who ran away in fear:\n");
     for(int i = 0; i < NUM_HUNTERS; i++){
         if(house->huntersInHouse[i].fear >= FEAR_MAX){
             printf("%s\n", house->huntersInHouse[i].name);
+            fprintf(house->outfile, "%s\n", house->huntersInHouse[i].name);
         }
     }
     printf("Hunters who left due to boredom:\n");
+    fprintf(house->outfile, "Hunters who left due to boredom:\n");
     for(int i = 0; i < NUM_HUNTERS; i++){
         if(house->huntersInHouse[i].boredom >= BOREDOM_MAX){
             printf("%s\n", house->huntersInHouse[i].name);
+            fprintf(house->outfile, "%s\n", house->huntersInHouse[i].name);
         }
     }
 
@@ -188,15 +210,17 @@ void printResults(House* house){
     Logs the list of hunters' shared evidence through iteration.
         in: evidenceList - the hunters' list of unique pieces of evidence.
 */
-void printEvidenceList(EvidenceList* evidenceList) {
+void printEvidenceList(EvidenceList* evidenceList, FILE *outfile) {
 
     EvidenceNode* current = evidenceList->head;
     printf("Evidence found:\n");
+    fprintf(outfile, "Evidence found:\n");
 
     while (current != NULL) {
         char evidenceTypeString[MAX_STR];
         evidenceToString(current->evType, evidenceTypeString);
         printf("    - %s \n", evidenceTypeString);
+        fprintf(outfile, "    - %s \n", evidenceTypeString);
         current = current->next;
     }
 

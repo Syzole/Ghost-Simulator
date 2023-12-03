@@ -20,7 +20,6 @@ void initRoomList(RoomList* roomList){
 void initHouse(House* house) {
     initRoomList(&((house)->rooms));
     initEvidenceList(&((house)->foundEvidence));
-    fprintf(house->outfile, "a");
     sem_init (&(house->houseSemaphore), 0, 1);
 }
 

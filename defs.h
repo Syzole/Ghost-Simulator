@@ -124,17 +124,17 @@ void cleanupHouse(House* house);
 // Logging function declarations
 void l_hunterInit(char* name, enum EvidenceType equipment, FILE *outfile);
 void l_hunterMove(char* name, char* room, FILE *outfile);
-void l_hunterReview(char* name, enum LoggerDetails reviewResult);
-void l_hunterCollect(char* name, enum EvidenceType evidence, char* room);
-void l_hunterExit(char* name, enum LoggerDetails reason);
+void l_hunterReview(char* name, enum LoggerDetails reviewResult, FILE *outfile);
+void l_hunterCollect(char* name, enum EvidenceType evidence, char* room, FILE *outfile);
+void l_hunterExit(char* name, enum LoggerDetails reason, FILE *outfile);
 void l_ghostInit(enum GhostClass type, char* room, FILE *outfile);
 void l_ghostMove(char* room, FILE *outfile);
 void l_ghostEvidence(enum EvidenceType evidence, char* room, FILE *outfile);
-void l_ghostExit(enum LoggerDetails reason);
+void l_ghostExit(enum LoggerDetails reason, FILE *outfile);
 
 // New forward declarations for functions in logger.c
 void printResults(House* house);
-void printEvidenceList(EvidenceList* evidenceList);
+void printEvidenceList(EvidenceList* evidenceList, FILE *outfile);
 
 // Forward declarations for functions in Ghost.c
 void initGhost(Ghost* ghost, House* house);
