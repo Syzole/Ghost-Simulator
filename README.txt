@@ -2,7 +2,8 @@ Authors:
 Arjun Bedi: #101267749
 Jessica Hill 101280293
 
-There are two tar files included:
+As per the professor's instructions- since the bonus implementations change the base control flow,
+there are two tar files included:
 The base file (COMP2401_BEDI_ARJUN_101267749_HILL_JESSICA_101280293_FINAL.tar)
 and the bonus file (BONUS_COMP2401_BEDI_ARJUN_101267749_HILL_JESSICA_101280293_FINAL.tar).
 
