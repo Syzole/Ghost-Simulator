@@ -13,14 +13,14 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     printf("\n");
     scanf("%63s", hunter->name);
     hunter->roomIn = NULL;
-    hunter->canRead = (EvidenceType)(numHunt);
+    hunter->canRead = (EvidenceType) chooseEvidence(hunter, house);
     hunter->collect = &(house->foundEvidence);
     hunter->fear = 0;
     hunter->boredom = 0;
     hunter->winCondition = 0;
     hunter->houseSemaphore = &(house->houseSemaphore);
     hunter->outfile = house->outfile;
-    l_hunterInit(hunter->name,hunter->canRead, house->outfile);
+    //l_hunterInit(hunter->name,hunter->canRead, house->outfile);
 }
 
 /*
@@ -184,4 +184,55 @@ void leaveHouse(Hunter* hunter){
         hunter->roomIn->huntersInRoom[hunter->id] = NULL;
         hunter->roomIn = NULL;
     }
+}
+
+EvidenceType chooseEvidence(Hunter* hunter, House* house){
+    int choice = 0;
+    int isNotUnique = 1;
+    printf("\n");
+    printf("What evidence should Hunter #%d be able to read?",hunter->id+1);
+    printf("\n");
+    printf("0. EMF\n");
+    printf("1. Temperature\n");
+    printf("2. Fingerprints\n");
+    printf("3. Sound\n");
+    printf("\n");
+    scanf("%d", &choice);
+
+    while(choice < 0 || choice > 3){
+        printf("\n");
+        printf("Invalid choice. Please enter a number between 0 and 3.");
+        printf("\n");
+        scanf("%d", &choice);
+    }
+
+    while(isNotUnique){
+        for(int i = 0; i < hunter->id; i++){
+            if(house->huntersInHouse[i].canRead == choice){
+                printf("\n");
+                printf("That evidence is already being read by another hunter. Please choose another.");
+                printf("\n");
+                scanf("%d", &choice);
+            }
+        }
+        isNotUnique = 0;
+    }
+    switch(choice){
+        case 0:
+            return EMF;
+            break;
+        case 1:
+            return TEMPERATURE;
+            break;
+        case 2:
+            return FINGERPRINTS;
+            break;
+        case 3:
+            return SOUND;
+            break;
+        default:
+            return EV_UNKNOWN;
+            break;
+    }
+    
 }

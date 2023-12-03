@@ -49,7 +49,7 @@ void initGhost(Ghost* ghost, House* house) {
     ghost->roomIn = currRoomNode->data;
     currRoomNode->data->ghostInRoom = ghost;
     ghost->outfile = house->outfile;
-    l_ghostInit(ghost->ghostType, ghost->roomIn->name, ghost->outfile);
+    //l_ghostInit(ghost->ghostType, ghost->roomIn->name, ghost->outfile);l_ghostInit(ghost->ghostType, ghost->roomIn->name, ghost->outfile);
 }
 
 /*

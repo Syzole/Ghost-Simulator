@@ -27,7 +27,13 @@ int main()
     printf("%-18s| %-20s | %-s\n", "------------------", "--------------------", "--------------------");
     fprintf(house.outfile, "%-18s| %-20s | %-s\n", "Action", "Entity", "Action Description");
     fprintf(house.outfile, "%-18s| %-20s | %-s\n", "------------------", "--------------------", "--------------------");
-  
+
+    l_ghostInit(house.ghost.ghostType, house.ghost.roomIn->name, house.ghost.outfile);
+    for (int i = 0; i < NUM_HUNTERS; ++i) {
+        l_hunterInit(house.huntersInHouse[i].name, house.huntersInHouse[i].canRead, house.huntersInHouse[i].outfile);
+    }
+
+
     pthread_t g, h1, h2, h3, h4;
 
     pthread_create(&g, NULL, ghost_thread, &(house.ghost));

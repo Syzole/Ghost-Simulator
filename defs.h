@@ -151,6 +151,7 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom);
 void checkForEv(Hunter* hunter);
 int evReview(Hunter* hunter);
 void leaveHouse(Hunter* hunter);
+EvidenceType chooseEvidence(Hunter* hunter, House* house);
 
 // Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);
