@@ -143,9 +143,11 @@ GhostClass determineGhostType(EvidenceList* foundEvidence) {
     return GH_UNKNOWN;
 }
 
-
-
-// Function to check if a room has hunters in it
+/*
+    Checks the given room to see if it has hunters in it.
+        in: room - the room that is being checked for hunters.
+        returns: true or false depending on if there are hunters present.
+*/
 int roomHasHunters(Room* room) {
   
     // Iterate through each hunter in the room
