@@ -47,3 +47,9 @@ Program instructions:
 - The program will start by asking the user for input for 4 names, one for each hunter
 - After the program will run the simulation
 - At the end, it will print the results to see what the final outcome was
+
+Special Notes:
+- Our run with default  parameters results in either the hunters winning or them getting bored, we found that
+to solve this problem either decrease the fear max to a value of 1, 2 or 3, or raising the ghost time to roughly half of the 
+hunter timer, so about 2500, or 3000 or combing the two changes. We noticed that since the ghost takes much more actions than the hunters, it tends to leave rooms before the hunter
+can take its thread to run, making it so that the fear check is never made so by reducing fear max or slowing the ghost fixes this problem

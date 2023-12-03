@@ -16,7 +16,7 @@
 #define HUNTER_WAIT     5000
 #define GHOST_WAIT      600
 #define NUM_HUNTERS     4
-#define FEAR_MAX        2
+#define FEAR_MAX        10
 #define LOGGING         C_TRUE
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
