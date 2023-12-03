@@ -120,6 +120,7 @@ void checkIfSameRoom(Hunter* hunter){
     if(hunter->roomIn->ghostInRoom != NULL){
         hunter->fear++;
         hunter->boredom = 0;
+        //printf("%s is afraid!\n", hunter->name);
     } else{
         hunter->boredom++;
     }

@@ -10,13 +10,13 @@
 // Constants
 #define MAX_STR         64
 #define MAX_RUNS        50
-#define BOREDOM_MAX     200
+#define BOREDOM_MAX     100
 #define C_TRUE          1
 #define C_FALSE         0
 #define HUNTER_WAIT     5000
 #define GHOST_WAIT      600
 #define NUM_HUNTERS     4
-#define FEAR_MAX        1
+#define FEAR_MAX        10
 #define LOGGING         C_TRUE
 #define ALLOWED_EVIDENCE 3
 #define EVIDENCE_TYPES 4
