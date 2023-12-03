@@ -35,6 +35,63 @@ void initEvidenceList(EvidenceList* evidenceList){
 }
 
 /*
+    Uses user input to set the type of evidence each hunter can read,
+    ensuring that no two hunters have the same type.
+        out: hunter - the hunter whose canRead evidence type is being chosen.
+        in: house - the house that the list of hunters is stored in- used for iteration.
+*/
+EvidenceType chooseEvidence(Hunter* hunter, House* house){
+    int choice = 0;
+    int isNotUnique = 1;
+    printf("\n");
+    printf("What evidence should Hunter #%d be able to read?",hunter->id+1);
+    printf("\n");
+    printf("0. EMF\n");
+    printf("1. Temperature\n");
+    printf("2. Fingerprints\n");
+    printf("3. Sound\n");
+    printf("\n");
+    scanf("%d", &choice);
+
+    while(choice < 0 || choice > 3){
+        printf("\n");
+        printf("Invalid choice. Please enter a number between 0 and 3.");
+        printf("\n");
+        scanf("%d", &choice);
+    }
+
+    while(isNotUnique){
+        for(int i = 0; i < hunter->id; i++){
+            if(house->huntersInHouse[i].canRead == choice){
+                printf("\n");
+                printf("That evidence is already being read by another hunter. Please choose another.");
+                printf("\n");
+                scanf("%d", &choice);
+            }
+        }
+        isNotUnique = 0;
+    }
+    switch(choice){
+        case 0:
+            return EMF;
+            break;
+        case 1:
+            return TEMPERATURE;
+            break;
+        case 2:
+            return FINGERPRINTS;
+            break;
+        case 3:
+            return SOUND;
+            break;
+        default:
+            return EV_UNKNOWN;
+            break;
+    }
+    
+}
+
+/*
     Removes the given hunter from its current room, unlocking it, and moves the
     hunter to the given room, locking that one. It also logs this movement.
         in/out: hunter - the hunter who being given a pointer to the new room.
@@ -184,55 +241,4 @@ void leaveHouse(Hunter* hunter){
         hunter->roomIn->huntersInRoom[hunter->id] = NULL;
         hunter->roomIn = NULL;
     }
-}
-
-EvidenceType chooseEvidence(Hunter* hunter, House* house){
-    int choice = 0;
-    int isNotUnique = 1;
-    printf("\n");
-    printf("What evidence should Hunter #%d be able to read?",hunter->id+1);
-    printf("\n");
-    printf("0. EMF\n");
-    printf("1. Temperature\n");
-    printf("2. Fingerprints\n");
-    printf("3. Sound\n");
-    printf("\n");
-    scanf("%d", &choice);
-
-    while(choice < 0 || choice > 3){
-        printf("\n");
-        printf("Invalid choice. Please enter a number between 0 and 3.");
-        printf("\n");
-        scanf("%d", &choice);
-    }
-
-    while(isNotUnique){
-        for(int i = 0; i < hunter->id; i++){
-            if(house->huntersInHouse[i].canRead == choice){
-                printf("\n");
-                printf("That evidence is already being read by another hunter. Please choose another.");
-                printf("\n");
-                scanf("%d", &choice);
-            }
-        }
-        isNotUnique = 0;
-    }
-    switch(choice){
-        case 0:
-            return EMF;
-            break;
-        case 1:
-            return TEMPERATURE;
-            break;
-        case 2:
-            return FINGERPRINTS;
-            break;
-        case 3:
-            return SOUND;
-            break;
-        default:
-            return EV_UNKNOWN;
-            break;
-    }
-    
 }

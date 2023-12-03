@@ -147,11 +147,11 @@ int roomHasHunters(Room* room);
 // Forward declarations for functions in Hunter.c
 void initHunter(Hunter* hunter, House* house, int numHunt);
 void initEvidenceList(EvidenceList* evidenceList);
+EvidenceType chooseEvidence(Hunter* hunter, House* house);
 void moveToNewRoom(Hunter* hunter, Room* newRoom);
 void checkForEv(Hunter* hunter);
 int evReview(Hunter* hunter);
 void leaveHouse(Hunter* hunter);
-EvidenceType chooseEvidence(Hunter* hunter, House* house);
 
 // Forward declarations for functions in house.c
 void initRoomList(RoomList* roomList);

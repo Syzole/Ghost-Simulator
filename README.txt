@@ -2,15 +2,12 @@ Authors:
 Arjun Bedi: #101267749
 Jessica Hill 101280293
 
-As per the professor's instructions- since the bonus implementations change the base control flow,
-there are two tar files included:
-The base file (COMP2401_BEDI_ARJUN_101267749_HILL_JESSICA_101280293_FINAL.tar)
-and the bonus file (BONUS_COMP2401_BEDI_ARJUN_101267749_HILL_JESSICA_101280293_FINAL.tar).
 
 Bonuses implemented:
 -The commit png is a screen shot our commit history for the Github bonus marks
 -It writes a log of all the events to the logging.txt file
 -Used print formatting to make the data easy to read using consistent fixed-width columns
+-Allows the user to choose the name and equipment type of each hunter
 
 Program Description:
 - Program starts by initializing a house and adding rooms to the house
@@ -34,7 +31,7 @@ List of files used for compilation:
 
 ● Ghost.c: initGhost(), moveGhost(), doNothing(), dropEvidence(), determineGhostType()
 
-● Hunter.c: initHunter(), initEvidenceList(), moveToNewRoom(), isUnique(), checkForEv(), evReview(), leaveHouse()
+● Hunter.c: initHunter(), initEvidenceList(), chooseEvidence(), moveToNewRoom(), isUnique(), checkForEv(), evReview(), leaveHouse()
 
 ● defs.h: This is the header that contains all of the constants and forward declarations for each of the files
 
