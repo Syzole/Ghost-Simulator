@@ -34,6 +34,11 @@ int main()
     return 0;
 }
 
+/*
+    Initializes the ghost and hunters, adding them to rooms in
+    the house.
+        in/out: house - the house who is receiving the hunters and ghost.
+*/
 void startHunt(House *house){
     //set ghost in random room, not in van
     initGhost(&(house->ghost), house);
@@ -47,6 +52,15 @@ void startHunt(House *house){
     
 }
 
+
+/*
+    Controls the ghost thread, including the ghost's boredom, choices
+    (do nothing, drop evidence, and move to a new room). If the ghost
+    gets too bored, the thread exits. A semaphore is used to lock the
+    room it's in and unlock it after its turn is over. It is removed from
+    the room it's in after leaving the house and logging this.
+        in/out: arg - the ghost whose members are being modified and checked.
+*/
 void* ghost_thread(void* arg){
     Ghost* ghost = (Ghost*)arg;
     int shouldContinue = 1;
@@ -91,6 +105,16 @@ void* ghost_thread(void* arg){
     }
 }
 
+
+/*
+    Controls a hunter thread, including the hunter's boredom, choices
+    (move to a new room, check for evidence to collect, and review collected
+    evidence). If the hunter gets too bored, afraid, or reviews that there is
+    enough evidence, the thread exits. A semaphore is used to lock the
+    room it's in and unlock it after its turn is over. It is removed from
+    the room it's in after leaving the house and logging this.
+        out: arg - the hunter whose members are being modified and checked.
+*/
 void* hunter_thread(void* arg){
     Hunter* hunter = (Hunter*) arg;
     int shouldContinue = 1;
