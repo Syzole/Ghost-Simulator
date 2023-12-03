@@ -8,7 +8,12 @@ int main()
     // Create the house: You may change this, but it's here for demonstration purposes
     // Note: This code will not compile until you have implemented the house functions and structures
     House house;
-
+    house.outfile = fopen("logging.txt", "w");
+    if(!house.outfile){
+        fprintf(stdout, "Error\n");
+        exit(1);
+    }
+    
     initHouse(&house); // REMEMBER TO EDIT COMMENTS WHEN NEW FEATURES ARE ADDED TO FUNCTIONS
     populateRooms(&house);
 
@@ -30,6 +35,7 @@ int main()
 
     printResults(&house);
     cleanupHouse(&house);
+    fclose(house.outfile);
 
     return 0;
 }

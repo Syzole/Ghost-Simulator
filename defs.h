@@ -85,6 +85,7 @@ struct Hunter {
     int boredom;
     sem_t *houseSemaphore;
     int winCondition;
+    FILE *outfile;
 };
 
 struct Ghost {
@@ -93,6 +94,7 @@ struct Ghost {
     int boredom;
     Room* roomIn;
     sem_t *houseSemaphore;
+    FILE *outfile;
 };
 
 
@@ -102,6 +104,7 @@ struct House {
     Ghost ghost;
     EvidenceList foundEvidence;
     sem_t houseSemaphore;
+    FILE *outfile;
 };
 
 // Helper function declarations
@@ -119,14 +122,14 @@ void cleanupRoomList(RoomList* roomList);
 void cleanupHouse(House* house);
 
 // Logging function declarations
-void l_hunterInit(char* name, enum EvidenceType equipment);
-void l_hunterMove(char* name, char* room);
+void l_hunterInit(char* name, enum EvidenceType equipment, FILE *outfile);
+void l_hunterMove(char* name, char* room, FILE *outfile);
 void l_hunterReview(char* name, enum LoggerDetails reviewResult);
 void l_hunterCollect(char* name, enum EvidenceType evidence, char* room);
 void l_hunterExit(char* name, enum LoggerDetails reason);
-void l_ghostInit(enum GhostClass type, char* room);
-void l_ghostMove(char* room);
-void l_ghostEvidence(enum EvidenceType evidence, char* room);
+void l_ghostInit(enum GhostClass type, char* room, FILE *outfile);
+void l_ghostMove(char* room, FILE *outfile);
+void l_ghostEvidence(enum EvidenceType evidence, char* room, FILE *outfile);
 void l_ghostExit(enum LoggerDetails reason);
 
 // New forward declarations for functions in logger.c

@@ -48,7 +48,8 @@ void initGhost(Ghost* ghost, House* house) {
 
     ghost->roomIn = currRoomNode->data;
     currRoomNode->data->ghostInRoom = ghost;
-    l_ghostInit(ghost->ghostType, ghost->roomIn->name);
+    ghost->outfile = house->outfile;
+    l_ghostInit(ghost->ghostType, ghost->roomIn->name, ghost->outfile);
 }
 
 /*
@@ -75,7 +76,7 @@ int moveGhost(Ghost* ghost, Room* room){
     ghost->roomIn = room;
     //did ghost stay in his place, no so return false
     sem_wait(ghost->houseSemaphore);
-    l_ghostMove(room->name);
+    l_ghostMove(room->name, ghost->outfile);
     sem_post(ghost->houseSemaphore);
 
     sem_post(&(room->semaphore));
@@ -107,7 +108,7 @@ void dropEvidence(Ghost* ghost){
     sem_post(&(ghost->roomIn->ev.semaphore));
 
     sem_wait(ghost->houseSemaphore);
-    l_ghostEvidence(addedEv, ghost->roomIn->name);
+    l_ghostEvidence(addedEv, ghost->roomIn->name, ghost->outfile);
     sem_post(ghost->houseSemaphore);
 }
 

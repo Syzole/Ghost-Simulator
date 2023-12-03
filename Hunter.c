@@ -17,7 +17,8 @@ void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->boredom = 0;
     hunter->winCondition = 0;
     hunter->houseSemaphore = &(house->houseSemaphore);
-    l_hunterInit(hunter->name,hunter->canRead);
+    hunter->outfile = house->outfile;
+    l_hunterInit(hunter->name,hunter->canRead, house->outfile);
 }
 
 /*
@@ -46,7 +47,7 @@ void moveToNewRoom(Hunter* hunter, Room* newRoom) {
     newRoom->huntersInRoom[hunter->id] = hunter;
     hunter->roomIn = newRoom;
     sem_wait(hunter->houseSemaphore);
-    l_hunterMove(hunter->name, newRoom->name);
+    l_hunterMove(hunter->name, newRoom->name, hunter->outfile);
     sem_post(hunter->houseSemaphore);
     
     sem_post(&newRoom->semaphore);

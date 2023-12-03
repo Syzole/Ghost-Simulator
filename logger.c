@@ -5,11 +5,12 @@
         in: hunter - the hunter name to log
         in: equipment - the hunter's equipment
 */
-void l_hunterInit(char* hunter, enum EvidenceType equipment) {
+void l_hunterInit(char* hunter, enum EvidenceType equipment, FILE *outfile) {
     if (!LOGGING) return;
     char ev_str[MAX_STR];
     evidenceToString(equipment, ev_str);
-    printf("[HUNTER INIT] [%s] is a [%s] hunter\n", hunter, ev_str);    
+    printf("[HUNTER INIT] [%s] is a [%s] hunter\n", hunter, ev_str);
+    fprintf(outfile, "[HUNTER INIT] [%s] is a [%s] hunter\n", hunter, ev_str);
 }
 
 /*
@@ -17,9 +18,10 @@ void l_hunterInit(char* hunter, enum EvidenceType equipment) {
         in: hunter - the hunter name to log
         in: room - the room name to log
 */
-void l_hunterMove(char* hunter, char* room) {
+void l_hunterMove(char* hunter, char* room, FILE *outfile) {
     if (!LOGGING) return;
     printf("[HUNTER MOVE] [%s] has moved into [%s]\n", hunter, room);
+    fprintf(outfile, "[HUNTER MOVE] [%s] has moved into [%s]\n", hunter, room);
 }
 
 /*
@@ -82,9 +84,10 @@ void l_hunterCollect(char* hunter, enum EvidenceType evidence, char* room) {
     Logs the ghost moving into a new room.
         in: room - the room name to log
 */
-void l_ghostMove(char* room) {
+void l_ghostMove(char* room, FILE *outfile) {
     if (!LOGGING) return;
     printf("[GHOST MOVE] Ghost has moved into [%s]\n", room);
+    fprintf(outfile, "[GHOST MOVE] Ghost has moved into [%s]\n", room);
 }
 
 /*
@@ -114,11 +117,12 @@ void l_ghostExit(enum LoggerDetails reason) {
         in: evidence - the evidence type to log
         in: room - the room name to log
 */
-void l_ghostEvidence(enum EvidenceType evidence, char* room) {
+void l_ghostEvidence(enum EvidenceType evidence, char* room, FILE *outfile) {
     if (!LOGGING) return;
     char ev_str[MAX_STR];
     evidenceToString(evidence, ev_str);
     printf("[GHOST EVIDENCE] Ghost left [%s] in [%s]\n", ev_str, room);
+    fprintf(outfile, "[GHOST EVIDENCE] Ghost left [%s] in [%s]\n", ev_str, room);
 }
 
 /*
@@ -126,11 +130,12 @@ void l_ghostEvidence(enum EvidenceType evidence, char* room) {
         in: ghost - the ghost type to log
         in: room - the room name that the ghost is starting in
 */
-void l_ghostInit(enum GhostClass ghost, char* room) {
+void l_ghostInit(enum GhostClass ghost, char* room, FILE *outfile) {
     if (!LOGGING) return;
     char ghost_str[MAX_STR];
     ghostToString(ghost, ghost_str);
     printf("[GHOST INIT] Ghost is a [%s] in room [%s]\n", ghost_str, room);
+    fprintf(outfile, "[GHOST INIT] Ghost is a [%s] in room [%s]\n", ghost_str, room);
 }
 
 /*

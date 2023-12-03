@@ -20,6 +20,7 @@ void initRoomList(RoomList* roomList){
 void initHouse(House* house) {
     initRoomList(&((house)->rooms));
     initEvidenceList(&((house)->foundEvidence));
+    fprintf(house->outfile, "a");
     sem_init (&(house->houseSemaphore), 0, 1);
 }
 
@@ -39,7 +40,6 @@ Room* createRoom(char* name) {
     //set pointer of ghost to null and init both lists and the counter to 0
 
     sem_init(&(room->semaphore), 0, 1);
-
     room->ghostInRoom = NULL;    
     initEvidenceList(&(room->ev));
     initRoomList(&(room->roomlist));
