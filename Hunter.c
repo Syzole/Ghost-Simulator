@@ -8,7 +8,9 @@
 void initHunter(Hunter* hunter, House* house, int numHunt) {
     hunter->id = numHunt;
     //Hunter Id is the number of the hunter -1
+    printf("\n");
     printf("This is Hunter #%d. What should their name be?",numHunt+1);
+    printf("\n");
     scanf("%63s", hunter->name);
     hunter->roomIn = NULL;
     hunter->canRead = (EvidenceType)(numHunt);

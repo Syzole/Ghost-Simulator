@@ -17,14 +17,16 @@ int main()
     initHouse(&house); // REMEMBER TO EDIT COMMENTS WHEN NEW FEATURES ARE ADDED TO FUNCTIONS
     populateRooms(&house);
 
+    
+
+    startHunt(&house);
+
+    printf("\n");
+    fprintf(house.outfile, "\n");
     printf("%-18s| %-20s | %-s\n", "Action", "Entity", "Action Description");
     printf("%-18s| %-20s | %-s\n", "------------------", "--------------------", "--------------------");
     fprintf(house.outfile, "%-18s| %-20s | %-s\n", "Action", "Entity", "Action Description");
     fprintf(house.outfile, "%-18s| %-20s | %-s\n", "------------------", "--------------------", "--------------------");
-
-    startHunt(&house);
-
-    
   
     pthread_t g, h1, h2, h3, h4;
 
