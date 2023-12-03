@@ -113,7 +113,7 @@ void* ghost_thread(void* arg){
     enough evidence, the thread exits. A semaphore is used to lock the
     room it's in and unlock it after its turn is over. It is removed from
     the room it's in after leaving the house and logging this.
-        out: arg - the hunter whose members are being modified and checked.
+        in/out: arg - the hunter whose members are being modified and checked.
 */
 
 void* hunter_thread(void* arg){
