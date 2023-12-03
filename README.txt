@@ -20,7 +20,7 @@ Program Description:
 Note: The use of the house semaphore was used to make sure that the entities took turns making logging statements, so they do not interupt each other
 
 
-List of files:	
+List of files used for compilation:	
 
 ● Ghost.c: initGhost(), moveGhost(), doNothing(), dropEvidence(), determineGhostType()
 
@@ -39,7 +39,7 @@ List of files:
 ● utils.c:  randInt(), randFloat(), randomGhost(), ghostToString(), evidenceToString(), addEvidenceToEvidenceList(), checkIfSameRoom(), cleanupEvidenceList(), cleanupRoomList(), cleanupHouse()
 
 Compile instructions:
- - Inside the folder that contains all of the files, open the terminal and type 'make', this will create an executable called a4
+ - Inside the folder that contains all of the files, open the terminal and type 'make', this will create an executable called final
  - Inside the terminal type ./final to begin using the executable
  - To clean the compiled files, use make clean to clear the compiled executable and the object files made
 
@@ -53,3 +53,7 @@ Special Notes:
 to solve this problem either decrease the fear max to a value of 1, 2 or 3, or raising the ghost time to roughly half of the 
 hunter timer, so about 2500, or 3000 or combing the two changes. We noticed that since the ghost takes much more actions than the hunters, it tends to leave rooms before the hunter
 can take its thread to run, making it so that the fear check is never made so by reducing fear max or slowing the ghost fixes this problem
+
+- No AI was used (it caused more problems than helped), and as commented in our code the addEvidenceToEvidenceList was heavily influenced by my (Arjun Bedi) A4 addGhost function as I found alot of it transferable
+
+-The commit png is a screen shot our commit history for the Github bonus marks
