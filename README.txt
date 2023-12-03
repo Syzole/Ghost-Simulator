@@ -2,6 +2,11 @@ Authors:
 Arjun Bedi: #101267749
 Jessica Hill 101280293
 
+Bonuses implemented:
+-The commit png is a screen shot our commit history for the Github bonus marks
+-It writes a log of all the events to the logging.txt file
+-Used print formatting to make the data easy to read using consistent fixed-width columns
+
 Program Description:
 - Program starts by initializing a house and adding rooms to the house
 - Each room has a list of rooms it is connected to and evidence that has been dropped inside the room
@@ -55,5 +60,3 @@ hunter timer, so about 2500, or 3000 or combing the two changes. We noticed that
 can take its thread to run, making it so that the fear check is never made so by reducing fear max or slowing the ghost fixes this problem
 
 - No AI was used (it caused more problems than helped), and as commented in our code the addEvidenceToEvidenceList was heavily influenced by my (Arjun Bedi) A4 addGhost function as I found alot of it transferable
-
--The commit png is a screen shot our commit history for the Github bonus marks
