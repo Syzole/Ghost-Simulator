@@ -167,7 +167,6 @@ void cleanupRoomList(RoomList* roomList) {
     lists for each room. Function calls are used to accomplish this.
         out: house - the house whose members are being freed and reset.
 */
-// 
 void cleanupHouse(House* house) {
     cleanupEvidenceList(&(house->foundEvidence));
 
@@ -183,10 +182,45 @@ void cleanupHouse(House* house) {
         free(currentRoomNode);        // Free the node itself
 
         currentRoomNode = nextRoomNode;
-    }
+    }  
 
     // Reset head, tail, and count after cleanup
     house->rooms.head = house->rooms.tail = NULL;
     house->rooms.count = 0;
 }
 
+/*  
+    Finds and returns the room with the provided name in the given room list.
+        in: roomList - the house's list of rooms that is being iterated through.
+        in: roomName - a string of the room name being searched for.
+        returns: the room with the provided name, or NULL if it is not found.
+*/
+Room* findRoom(RoomList* roomList, char* roomName) {
+    RoomNode* currentRoomNode = roomList->head;
+
+    while (currentRoomNode != NULL) {
+        if (strcmp(currentRoomNode->data->name, roomName) == 0) {
+            return currentRoomNode->data;
+        }
+        currentRoomNode = currentRoomNode->next;
+    }
+
+    return NULL;
+}
+
+/*  
+    Removes a newline character from the end of a string and replaces
+    it with a null terminator. This is used to ensure the rooms' names
+    are being read and stored correctly in populateRooms.
+        in/out: str - the string that is being read and modified.
+*/
+void cleanString(char* str) {
+    int i = 0;
+    while (str[i] != '\0') {
+        if (str[i] == '\n') {
+            str[i] = '\0';
+            return;
+        }
+        i++;
+    }
+}

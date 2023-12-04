@@ -8,6 +8,7 @@ Bonuses implemented:
 -It writes a log of all the events to the logging.txt file
 -Used print formatting to make the data easy to read using consistent fixed-width columns
 -Allows the user to choose the name and equipment type of each hunter
+-Reads the house layout from the file house.txt (room names and connections) and populates the house based on this
 
 Program Description:
 - Program starts by initializing a house and adding rooms to the house
@@ -43,7 +44,7 @@ List of files used for compilation:
 
 ● makefile: This file is used to compile the executable, instructions can be found below in Compile instructions
 
-● utils.c:  randInt(), randFloat(), randomGhost(), ghostToString(), evidenceToString(), addEvidenceToEvidenceList(), checkIfSameRoom(), cleanupEvidenceList(), cleanupRoomList(), cleanupHouse()
+● utils.c:  randInt(), randFloat(), randomGhost(), ghostToString(), evidenceToString(), addEvidenceToEvidenceList(), checkIfSameRoom(), cleanupEvidenceList(), cleanupRoomList(), cleanupHouse(), findRoom(), cleanString()
 
 Compile instructions:
  - Inside the folder that contains all of the files, open the terminal and type 'make', this will create an executable called final
@@ -51,9 +52,9 @@ Compile instructions:
  - To clean the compiled files, use make clean to clear the compiled executable and the object files made
 
 Program instructions:
-- The program will start by asking the user for input for 4 names, one for each hunter
+- The program will start by asking the user for input for 4 names, one for each hunter, as well as their equipment type
 - After the program will run the simulation
-- At the end, it will print the results to see what the final outcome was
+- At the end, it will print the results as well as log it in a file to see what the final outcome was
 
 Special Notes:
 - Our run with default  parameters results in either the hunters winning or them getting bored, we found that
@@ -61,4 +62,6 @@ to solve this problem either decrease the fear max to a value of 1, 2 or 3, or r
 hunter timer, so about 2500, or 3000 or combing the two changes. We noticed that since the ghost takes much more actions than the hunters, it tends to leave rooms before the hunter
 can take its thread to run, making it so that the fear check is never made so by reducing fear max or slowing the ghost fixes this problem
 
-- No AI was used (it caused more problems than helped), and as commented in our code the addEvidenceToEvidenceList was heavily influenced by my (Arjun Bedi) A4 addGhost function as I found alot of it transferable
+- VSCode Copilot was used to make the entirety of the cleanString() method in utils.c; we typed "void cleanString" and it auto-completed
+- No AI was used for the rest of the program (it caused more problems than helped)
+- As commented in our code, the addEvidenceToEvidenceList was heavily influenced by Arjun Bedi's A4 addGhost function as he found a lot of it transferable

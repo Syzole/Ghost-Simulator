@@ -22,6 +22,8 @@
 #define EVIDENCE_TYPES 4
 #define NUM_GHOST_CHOICES 3
 #define NUM_HUNTER_CHOICES 3
+#define NUM_ROOMS 13
+#define NUM_ROOMS_CONNECTIONS 12
 
 // Enums
 typedef enum EvidenceType EvidenceType;
@@ -120,6 +122,8 @@ void checkIfSameRoom(Hunter* hunter);
 void cleanupEvidenceList(EvidenceList* evidenceList);
 void cleanupRoomList(RoomList* roomList);
 void cleanupHouse(House* house);
+Room* findRoom(RoomList* roomList, char* roomName);
+void cleanString(char* str);
 
 // Logging function declarations
 void l_hunterInit(char* name, enum EvidenceType equipment, FILE *outfile);
