@@ -102,7 +102,9 @@ void* ghost_thread(void* arg){
         sem_post(&ghost->roomIn->semaphore);
         if(ghost->boredom >= BOREDOM_MAX){
             ghost->roomIn->ghostInRoom = NULL;
+            sem_wait(ghost->houseSemaphore);
             l_ghostExit(LOG_BORED);
+            sem_post(ghost->houseSemaphore);
             pthread_exit(NULL);
         }
     }
@@ -159,6 +161,7 @@ void* hunter_thread(void* arg){
         }
         sem_post(&hunter->roomIn->semaphore);
         if(hunter->boredom >= BOREDOM_MAX || hunter->fear >= FEAR_MAX || winCondition == 1){
+            sem_wait(hunter->houseSemaphore);
             if(hunter->boredom >= BOREDOM_MAX){
                 l_hunterExit(hunter->name, LOG_BORED);
             } else if(hunter->fear >= FEAR_MAX){
@@ -167,6 +170,7 @@ void* hunter_thread(void* arg){
                 hunter->winCondition = 1;
                 l_hunterExit(hunter->name, LOG_EVIDENCE);
             }
+            sem_post(hunter->houseSemaphore);
             leaveHouse(hunter);
             pthread_exit(NULL);
         }
