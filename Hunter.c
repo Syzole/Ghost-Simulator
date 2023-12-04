@@ -76,6 +76,13 @@ EvidenceType chooseEvidence(Hunter* hunter, House* house){
             printf("That evidence is already being read by another hunter. Please choose another.");
             printf("\n");
             scanf("%d", &choice);
+
+            while(choice < 0 || choice > 3){
+                printf("\n");
+                printf("Invalid choice. Please enter a number between 0 and 3.");
+                printf("\n");
+                scanf("%d", &choice);
+            }
         }
     }
     switch(choice){
