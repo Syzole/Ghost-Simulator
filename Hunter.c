@@ -60,16 +60,23 @@ EvidenceType chooseEvidence(Hunter* hunter, House* house){
         scanf("%d", &choice);
     }
 
-    while(isNotUnique){
-        for(int i = 0; i < hunter->id; i++){
-            if(house->huntersInHouse[i].canRead == choice){
-                printf("\n");
-                printf("That evidence is already being read by another hunter. Please choose another.");
-                printf("\n");
-                scanf("%d", &choice);
+    while (isNotUnique) {
+        int isUnique = 1;
+        for (int i = 0; i < hunter->id; i++) {
+            if (house->huntersInHouse[i].canRead == choice) {
+                isUnique = 0;
+                break;
             }
         }
-        isNotUnique = 0;
+        if (isUnique) {
+            isNotUnique = 0;
+        } 
+        else {
+            printf("\n");
+            printf("That evidence is already being read by another hunter. Please choose another.");
+            printf("\n");
+            scanf("%d", &choice);
+        }
     }
     switch(choice){
         case 0:
