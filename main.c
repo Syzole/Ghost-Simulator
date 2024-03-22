@@ -5,8 +5,7 @@ int main()
     // Initialize the random number generator
     srand(time(NULL));
 
-    // Create the house: You may change this, but it's here for demonstration purposes
-    // Note: This code will not compile until you have implemented the house functions and structures
+    // Create the house
     House house;
 
     initHouse(&house); // REMEMBER TO EDIT COMMENTS WHEN NEW FEATURES ARE ADDED TO FUNCTIONS
