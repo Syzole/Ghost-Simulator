@@ -90,7 +90,7 @@ void evidenceToString(enum EvidenceType type, char* str) {
 /*  
     Dynamically allocates an evidence node in order to place the given evidence type in the
     next possible node in the given evidence list. This function was heavily influenced by
-    Arjun's addGhost function from Assignment 4 in this course.
+    Arjun's addGhost function from a previous assignment in this course.
         out: evidenceList - evidence is added to the evidence list pointed to.
         in: evidenceType - an enum that describes a type of evidence a ghost leaves.
 */
@@ -120,7 +120,6 @@ void checkIfSameRoom(Hunter* hunter){
     if(hunter->roomIn->ghostInRoom != NULL){
         hunter->fear++;
         hunter->boredom = 0;
-        //printf("%s is afraid!\n", hunter->name);
     } else{
         hunter->boredom++;
     }
